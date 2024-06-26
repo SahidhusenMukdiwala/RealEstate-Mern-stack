@@ -38,7 +38,6 @@ export const signin = async (req, res) => {
             return res.status(401).json({ message: false, message: 'Incorrect password or email !!! Please Check ' })
         }
         const {password,...rest} = user._doc // extract password
-        
         const token = jwt.sign({
             id: user._id,
         }, process.env.JWT_SECRET_KEY)
