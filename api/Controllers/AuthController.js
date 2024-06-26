@@ -12,7 +12,7 @@ export const signup = async (req, res,next) => {
     await newUser.save()
 
 
-    res.status(200).json({ success: true, message: 'User Created successfully' })
+    res.status(200).json({ success: true, message: 'User Created successfully',data:newUser })
 }
 catch (error) {
     // res.status(500).json({ success: false, message: 'Invalid Credentials !!! Please Check' })
