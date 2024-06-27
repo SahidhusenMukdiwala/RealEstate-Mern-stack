@@ -1,7 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors';
 import userRouter from '../api/routes/user.js'
 import authRouter from '../api/routes/Auth.js'
 
@@ -9,16 +8,11 @@ import authRouter from '../api/routes/Auth.js'
 dotenv.config()
 const app = express(); 
 const port = process.env.PORT || 8000
-const corsOptions ={
-    origin:"http://localhost:3000",
-    credentials:true,
-}
-mongoose.set('strictQuery',false)
+
 
 
 // ============================= Routes ===================================
 app.use(express.json()); // This allow json as a input at the server side
-app.use(cors(corsOptions));
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
 

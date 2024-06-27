@@ -1,6 +1,6 @@
 import User from '../Models/UserSchema.js'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import Jwt from 'jsonwebtoken'
 
 
 export const signup = async (req, res, next) => {
@@ -9,7 +9,7 @@ export const signup = async (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, 10)
 
     try {
-        const newUser = new User({ username, email, password: hashPass })
+        const newUser = new User({ username, email, password:hashPass })
         await newUser.save()
 
 
@@ -17,36 +17,45 @@ export const signup = async (req, res, next) => {
     }
     catch (error) {
         res.status(500).json({ success: false, message: 'Invalid Credentials !!! Please Check' })
-        
+
     }
 }
 
-
 export const signin = async (req, res) => {
     const email = req.body.email
-    
+    console.log(email)
     try {
         const user = await User.findOne({ email })
-        
+        console.log(user)
+
         if (!user) {
             return res.status(404).json({ message: false, message: 'User not found' })
+            
         }
-        
-        const checkCorrectPass = bcrypt.compare(req.body.password, user.password)
-        
+// error handling
+        console.log("ok")
+        const checkCorrectPass =  bcrypt.compareSync(req.body.password, user.password)
+        console.log(req.body.password,"body pass")
+        console.log(user.password,"saved pass")
+        console.log("checkCorrectPass",checkCorrectPass)
+
         if (!checkCorrectPass) {
-            return res.status(401).json({ message: false, message: 'Incorrect password or email !!! Please Check ' })
+            return res.status(401).json({ message: false, message: 'Incorrect password '})
         }
+        console.log("passcheck successful")
         const {password,...rest} = user._doc // extract password
-        const token = jwt.sign({
+        console.log(password)
+
+        const token = Jwt.sign({
             id: user._id,
         }, process.env.JWT_SECRET_KEY)
-        
+
         res.cookie('accessToken', token, {
             httpOnly: true
         }).status(200).json({ success: true, message: "Successfully Login", data: { ...rest }, token })
-        
+
     } catch (error) {
         res.status(500).json({ success: false, message: 'User Not Found' })
     }
 }
+
