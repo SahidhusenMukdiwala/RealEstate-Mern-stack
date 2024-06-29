@@ -32,11 +32,8 @@ export const signin = async (req, res) => {
             return res.status(404).json({ message: false, message: 'User not found' })
             
         }
-// error handling
-        console.log("ok")
+// error handling done
         const checkCorrectPass =  bcrypt.compareSync(req.body.password, user.password)
-        console.log(req.body.password,"body pass")
-        console.log(user.password,"saved pass")
         console.log("checkCorrectPass",checkCorrectPass)
 
         if (!checkCorrectPass) {
@@ -44,7 +41,7 @@ export const signin = async (req, res) => {
         }
         console.log("passcheck successful")
         const {password,...rest} = user._doc // extract password
-        console.log(password)
+        console.log("pass",password)
 
         const token = Jwt.sign({
             id: user._id,

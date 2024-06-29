@@ -7,6 +7,7 @@ import SignIn from './Pages/SignIn'
 import SignUp from './Pages/SignUp'
 import Header from './Components/Header/Header'
 import Footer from './Components/Footer/Footer'
+import CreateListing from './Pages/CreateListing'
 export default function App() {
   return <BrowserRouter>
   <Header/>
@@ -16,6 +17,7 @@ export default function App() {
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/about' element={<About />} />
       <Route path='/profile' element={<Profile />} />
+      <Route path='/create-listing' element={<CreateListing/>}/>
     </Routes>
     <Footer/>
   </BrowserRouter>

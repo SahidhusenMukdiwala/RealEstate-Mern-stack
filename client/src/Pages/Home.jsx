@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function Home() {
   return (
-    <div>Home</div>
+    <div className='mt-3 mb-3 '>
+      {/* <Link to={'/create-listing'} className=' bg-green-700 text-white uppercase p-3 text-center rounded-lg hover:opacity-95'>Create Listing</Link> */}
+    </div>
   )
 }

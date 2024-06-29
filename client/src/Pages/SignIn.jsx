@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function SignIn() {
   const [formData, setFormData] = useState({})
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const HandleChange = (e) => {
     setFormData({
@@ -26,16 +26,21 @@ function SignIn() {
           body: JSON.stringify(formData),
         }
       )
-      const result = await res.json()
-      console.log(result)
-      if (!res.ok) alert(result.message)
-        setLoading(false)
-      console.log(res)
-        navigate('/')
+     const data = await res.json()
+
+     console.log(data)
+     if(!res.ok) {
+      setLoading(false)
+      setError(data.message)
+      return
+     }
+
+     setLoading(false)
+     setError(null)
+     navigate('/')
     } catch (error) {
       setLoading(false)
       setError(error.message)
-
     }
 
   }
@@ -45,8 +50,8 @@ function SignIn() {
 
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input type="email" required placeholder='email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={HandleChange} />
-        <input type="password" required maxLength={20} minLength={1} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='password' onChange={HandleChange} />
-        <button  disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
+        <input type="password" required maxLength={20} minLength={8} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='password' onChange={HandleChange} />
+        <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           {
             loading ? 'Loading...' : ' Sign In'
           }</button>

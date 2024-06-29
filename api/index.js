@@ -1,8 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import userRouter from '../api/routes/user.js'
 import authRouter from '../api/routes/Auth.js'
+import listingRouter from '../api/routes/listing.js'
 
 
 dotenv.config()
@@ -13,8 +15,10 @@ const port = process.env.PORT || 8000
 
 // ============================= Routes ===================================
 app.use(express.json()); // This allow json as a input at the server side
+app.use(cookieParser())
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
+app.use('/api/listing',listingRouter)
 
 
 // ============================= Database Connection =============================
