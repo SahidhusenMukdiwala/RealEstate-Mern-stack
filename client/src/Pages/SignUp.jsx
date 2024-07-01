@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import GoogleAuth from './GoogleAuth'
 
 
 function SignIn() {
@@ -49,6 +50,7 @@ function SignIn() {
          {
           loading ? 'Loading...' :' Sign Up'
          }</button>
+<GoogleAuth/>
       </form>
 
       <div className="flex gap-2 justify-center mt-3">

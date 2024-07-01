@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInStart, signInFailure, signInSuccess } from '../redux/userSlice.js'
+import GoogleAuth from './GoogleAuth.jsx'
 
 function SignIn() {
   const [formData, setFormData] = useState({})
@@ -50,10 +51,8 @@ function SignIn() {
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input type="email" required placeholder='email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={HandleChange} />
         <input type="password" required maxLength={20} minLength={8} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='password' onChange={HandleChange} />
-        <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
-          {
-            loading ? 'Loading...' : ' Sign In'
-          }</button>
+        <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>{loading ? 'Loading...' : ' Sign In'}</button>
+        <GoogleAuth/>
       </form>
 
       <div className="flex gap-2 justify-center mt-3">

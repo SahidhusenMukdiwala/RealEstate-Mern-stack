@@ -128,7 +128,7 @@ function CreateListing() {
                 <div className="flex flex-col gap-4 flex-1">
                     <input type="text" value={formData.name} placeholder='Name' id='name' maxLength='62' minLength='18' required className='border p-3 rounded-lg focus:outline-none' onChange={handlechange} />
 
-                    <textarea onChange={handlechange} value={formData.description} type="text" placeholder='Description' id='description' required className='border p-3 rounded-lg focus:outline-none' />
+                    {/* <textarea onChange={handlechange} value={formData.description} type="text" placeholder='Description' id='description' required className='border p-3 rounded-lg focus:outline-none' /> */}
 
                     <input onChange={handlechange} value={formData.address} type="text" placeholder='Address' id='address' required className='border p-3 rounded-lg focus:outline-none' />
 
