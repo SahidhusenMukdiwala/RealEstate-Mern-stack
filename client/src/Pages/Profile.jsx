@@ -4,6 +4,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from '../firebase'
 import { useDispatch } from 'react-redux'
 import {DeleteUserFailure,DeleteUserStart, DeleteUserSuccess,updateUserFailure, updateUserStart, updateUserSuccess,signOutUserStart,signOutUserSuccess,signOutUserFailure } from '../redux/userSlice'
+import { Link } from 'react-router-dom'
 function Profile() {
   const fileRef = useRef(null)
   const { currentUser } = useSelector((state) => state.user)
@@ -150,9 +151,9 @@ function Profile() {
         <button onChange={handleSubmit} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           Update User
         </button>
-        <button className='bg-green-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
+        <Link to={'/create-listing'} className='bg-green-700 text-center text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           Create Listing
-        </button>
+        </Link>
       </form>
 
       <div className="flex gap-2 justify-between mt-5">
