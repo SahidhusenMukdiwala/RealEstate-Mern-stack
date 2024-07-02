@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import User from '../Models/UserSchema.js';
 export const test = (req, res) => {
     res.json({
@@ -30,6 +29,7 @@ export const deleteUser = async (req, res) => {
     const id = req.params.id;
     try {
         await User.findByIdAndDelete(id);
+        res.clearCookie('accessToken')
         res.status(200).json({ success: true, message: 'successfully deleted' });
     }
     catch (error) {

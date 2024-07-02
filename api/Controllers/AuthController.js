@@ -1,5 +1,6 @@
 import User from '../Models/UserSchema.js'
 import bcrypt from 'bcryptjs'
+import { response } from 'express'
 import Jwt from 'jsonwebtoken'
 
 
@@ -87,6 +88,16 @@ export const google = async (req, res) => {
             }).status(200).json({ success: true, message: "Successfully Login", data: { ...rest }, token })
 
         }
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Invalid Credentials" })
+    }
+}
+
+export const signOut = async(req,res) => {
+    try {
+        res.clearCookie('accessToken');
+        res.status(200).json({ success: true, message:'user has logged out'})
+
     } catch (error) {
         res.status(500).json({ success: false, message: "Invalid Credentials" })
     }
