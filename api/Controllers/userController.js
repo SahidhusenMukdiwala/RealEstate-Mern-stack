@@ -47,7 +47,7 @@ export const getListing = async (req, res) => {
         try {
             const listing = await Listing.find({userRef:req.params.id});
             res.status(200).json(listing)
-        } catch (error) {
+        } catch (error) { 
             res.status(500).json({ error: error.message})
         }
     }
