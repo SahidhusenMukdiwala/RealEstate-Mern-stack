@@ -18,7 +18,7 @@ export const DeleteListing = async (req, res) => {
         }
 
         if(req.user.id !== list.userRef){
-           return res.status(404).json({ status: false, message:"you can delete your Own"})
+           return res.status(401).json({ status: false, message:"you can delete your Own"})
         }
             try {
                 const list = await Listing.findByIdAndDelete(req.params.id)
@@ -27,4 +27,25 @@ export const DeleteListing = async (req, res) => {
         res.status(500).json({ status: false, message: error.message })
 
     }
+}
+
+
+export const UpdateListing = async (req, res) => {
+    const listing = await Listing.findById(req.params.id)
+    console.log(listing)
+    if(!listing){
+        res.status(404).json({ status: false, message:"Listing not found"})
+    }
+
+    // if(req.user.id !== listing.userRef){
+    //     return res.status(401).json({ status: false, message:"you can delete your Own"})
+    //  }
+
+     try {
+       const UpdatedListing =  await  Listing.findByIdAndUpdate(req.params.id,req.body,{new:true})
+       res.status(200).json({ status: true, message: "Successfully Update listing",UpdatedListing})
+      } catch (error) {
+        
+     }
+
 }
