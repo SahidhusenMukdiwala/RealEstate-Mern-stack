@@ -5,9 +5,11 @@ import { app } from '../firebase'
 import { useDispatch } from 'react-redux'
 import {DeleteUserFailure,DeleteUserStart, DeleteUserSuccess,updateUserFailure, updateUserStart, updateUserSuccess,signOutUserStart,signOutUserSuccess,signOutUserFailure } from '../redux/userSlice'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 function Profile() {
   const fileRef = useRef(null)
   const { currentUser } = useSelector((state) => state.user)
+  const userId = currentUser?.data?._id;
   const [file, setFile] = useState(undefined)
   const [filePercentage, setFilePercentage] = useState(0)
   const [fileUploaderror, setFileError] = useState(false)
@@ -16,13 +18,13 @@ function Profile() {
   console.log(formData)
   console.log("Percentage done :- ", filePercentage)
   console.log(fileUploaderror)
-  console.log("name", currentUser.name)
+
   // firebasse storage
   // allow read;
   // allow write: if
   // request.resource.size < 2 * 1024 * 1024 && 
   // request.resource.contentType.matches('images/.*')
-
+console.log("userId",userId)
   useEffect(() => {
     if (file) {
       handleFileUpload(file)
@@ -65,7 +67,7 @@ function Profile() {
   const handleDelete = async () => {
     dispatch(DeleteUserStart())
     try {
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`/api/user/delete/${userId}`, {
         method: 'DELETE'
       });
 
@@ -73,14 +75,15 @@ function Profile() {
 
       if (data.success === false) {
         dispatch(DeleteUserFailure(data.message))
+        toast.error(data.message)
         return
       }
       dispatch(DeleteUserSuccess(data.message))
+      toast.success("User deleted successfully")
       // res.status(200).json({success:true,message: "delete successfully  "});
     } catch (error) {
-      alert(error.message)
-
       dispatch(DeleteUserFailure(error.message))
+      toast.error(error.message)
     }
   }
 
@@ -88,8 +91,8 @@ function Profile() {
     e.preventDefault();
     console.log("UserId :- ", currentUser)
     try {
-      dispatch(updateUserStart())
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      // dispatch(updateUserStart())
+      const res = await fetch(`/api/user/update/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -101,11 +104,13 @@ function Profile() {
 
       if (data.success === false) {
         dispatch(updateUserFailure(data.message))
+        toast.error(data.message)
         return
       }
-
-      dispatch(updateUserSuccess(data.message))
+    dispatch(updateUserSuccess(data.message))
+    toast.success("User updated successfully")
     } catch (error) {
+      toast.error(error.message)
       dispatch(updateUserFailure(error.message));
     }
   }
@@ -116,11 +121,15 @@ function Profile() {
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message))
+        toast.error(data.message)
         return
       }
       dispatch(signOutUserSuccess(data))
+      toast.success("Sign out successfully")
       console.log(res)
+
     } catch (error) {
+      toast.error(error.message)
       dispatch(signOutUserFailure(error.message))
     }
   }
@@ -146,8 +155,8 @@ function Profile() {
           }
         </p>
         <input defaultValue={currentUser.email} type="text" placeholder='Username' className='border p-3 rounded-lg focus:outline-none' id='username' onChange={hadnleChange} />
-        <input defaultValue={currentUser.username} type="email" placeholder='Email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={hadnleChange} />
-        <input defaultValue={currentUser.password} type="password" maxLength={20} minLength={6} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='passwor' onChange={hadnleChange} />
+        <input disabled defaultValue={currentUser.username} type="email" placeholder='Email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={hadnleChange} />
+        <input disabled defaultValue={currentUser.password} type="password" maxLength={20} minLength={6} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='passwor' onChange={hadnleChange} />
         <button onChange={handleSubmit} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           Update User
         </button>

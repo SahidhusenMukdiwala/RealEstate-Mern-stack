@@ -6,6 +6,7 @@ const initialState = {
     loading:false,
 }
 
+
 const userSlice = createSlice({
     name: 'user',
     initialState,

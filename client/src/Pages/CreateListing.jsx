@@ -1,19 +1,20 @@
 import { getDownloadURL } from 'firebase/storage'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-
+import { toast } from 'react-toastify';
 
 function CreateListing() {
-
-    const { currentUser } = useSelector(state => state.user)
+//
+    const  {currentUser}  = useSelector(state => state.user)
     const [files, setFile] = useState([])
     const [error, setError] = useState(false)
     const [imageerrorMessage, setImagesErrorMessage] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [upload, setUpload] = useState(false)
     const [formData, setFormData] = useState({
-        name: '',
+        name: "",
         description: "",
         address: "",
         regularPrice: 50,
@@ -27,8 +28,29 @@ function CreateListing() {
         furnished: false,
     })
 
+    const userId = currentUser?.data?._id;
+
+
+    // useEffect(() => {
+    //     setFormData({
+    //         name: currentUser?.name,
+    //         description: currentUser?.description,
+    //         address: currentUser?.address,
+    //         regularPrice: currentUser?.regularPrice,
+    //         discountPrice: currentUser?.discountPrice,
+    //         imageUrls: currentUser?.imageUrls,
+    //         bathrooms: currentUser?.bathrooms,
+    //         bedrooms: currentUser?.bedrooms,
+    //         type: currentUser?.type,
+    //         parking: currentUser?.parking,
+    //         furnished: currentUser?.furnished,
+    //         offers: currentUser?.offers
+    //     })
+    // }, [currentUser])
+
     console.log("formData", formData)
     const handleImageSubmit = (e) => {
+
         if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
             setLoading(true)
             const promises = [];
@@ -101,6 +123,7 @@ function CreateListing() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log("CurrenrUserId", currentUser)
         if (formData.imageUrls.length < 0) {
             return setError("You must upload two images")
         }
@@ -108,12 +131,12 @@ function CreateListing() {
         try {
             setLoading(true)
             setError(false)
-            const res = fetch('/api/listing/create', {
+            const res = await fetch('/api/listing/create', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, userRef: userId }),
             })
 
             const result = await res.json()
@@ -123,10 +146,12 @@ function CreateListing() {
             setLoading(false)
 
             if (!res.ok) {
-                setError(result.message)
+                toast.error(res.message)
+                setError("res", res.message)
             }
-            alert("Successfully Created")
+            toast.success(result.message)
         } catch (error) {
+            toast.error(error.message)
             // alert("catch error",error.message)
             setError(error.message)
         }
@@ -145,11 +170,11 @@ function CreateListing() {
             <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
 
                 <div className="flex flex-col gap-4 flex-1">
-                    <input type="text" value={formData.name} placeholder='Name' id='name' maxLength='62' minLength='18' required className='border p-3 rounded-lg focus:outline-none' onChange={handlechange} />
+                    <input type="text" value={formData.name} placeholder='Property Name' id='name' maxLength='62' minLength='8' required className='border p-3 rounded-lg focus:outline-none' onChange={handlechange} />
 
-                    <textarea onChange={handlechange} value={formData.description} type="text" placeholder='Description' id='description' required className='border p-3 rounded-lg focus:outline-none' />
+                    <textarea onChange={handlechange} value={formData.description} type="text" placeholder='Property Description' id='description' required className='border p-3 rounded-lg focus:outline-none' />
 
-                    <input onChange={handlechange} value={formData.address} type="text" placeholder='Address' id='address' required className='border p-3 rounded-lg focus:outline-none' />
+                    <input onChange={handlechange} value={formData.address} type="text" placeholder='Property Address' id='address' required className='border p-3 rounded-lg focus:outline-none' />
 
                     {/* =============chechbox complete ================== */}
                     <div className="flex gap-6 flex-wrap">
@@ -213,7 +238,7 @@ function CreateListing() {
                     <p className='font-semibold'>Images : <span className='text-sm font-normal text-gray-600'>The first Image Will be the cover (max 6)</span> </p>
                     <div className="flex gap-4">
                         <input className='p-3 border border-gray-300 rounded w-full' type="file" id="images" accept='images/*' multiple onChange={(e) => { setFile(e.target.files) }} />
-                        <button disabled={loading} type='button' onClick={handleImageSubmit} className='p-3  text-green-700 border  border-green-700 rounded hover:shadow-lg uppercase disabled:opacity-80'>{loading ? 'Uploading ....' : 'Upload'}</button>
+                        <button disabled={upload} type='button' onClick={handleImageSubmit} className='p-3  text-green-700 border  border-green-700 rounded hover:shadow-lg uppercase disabled:opacity-80'>{upload ? 'Uploading ....' : 'Upload'}</button>
                     </div>
                     <p className='text-red-700 text-sm'>{imageerrorMessage && imageerrorMessage}</p>
                     {
@@ -225,7 +250,7 @@ function CreateListing() {
                             </div>
                         ))
                     }
-                    <button disabled={loading} className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-85'>{loading ? 'Creating ....' : 'Create List'}</button>
+                    <button disabled={loading || upload} className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-85'>{loading ? 'Creating ....' : 'Create List'}</button>
                 </div>
             </form>
         </main>

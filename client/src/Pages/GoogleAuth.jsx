@@ -5,6 +5,7 @@ import { app } from '../firebase'
 import { signInFailure, signInSuccess } from '../redux/userSlice.js'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 function GoogleAuth() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -31,11 +32,14 @@ function GoogleAuth() {
 
       if(data.success === false){
         dispatch(signInFailure(data));
+        toast.error(error.message)
         return
       }
       dispatch(signInSuccess(data));
+      toast.success("LogIn Successfully ...")
       navigate('/')
     } catch (error) {
+      toast.error(error.message)
       console.log("not sign In with Google",error.message)
     }
   }

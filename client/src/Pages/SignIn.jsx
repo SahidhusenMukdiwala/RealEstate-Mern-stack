@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInStart, signInFailure, signInSuccess } from '../redux/userSlice.js'
 import GoogleAuth from './GoogleAuth.jsx'
-
+import { toast } from 'react-toastify'
 function SignIn() {
   const [formData, setFormData] = useState({})
   const { loading, error } = useSelector((state) => state.user)
@@ -33,13 +33,16 @@ function SignIn() {
 
       console.log(data)
       if (!res.ok) {
+        toast.error(res.message)
         dispatch(signInFailure(data.message))
         return
       }
 
       dispatch(signInSuccess(data))
+      toast.success("Sign In Successfully")
       navigate('/')
     } catch (error) {
+      toast.error(error.message)
       dispatch(signInFailure(error.message))
     }
 

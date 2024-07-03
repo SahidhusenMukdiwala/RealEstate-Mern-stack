@@ -6,7 +6,6 @@ import userRouter from '../api/routes/user.js'
 import authRouter from '../api/routes/Auth.js'
 import listingRouter from '../api/routes/listing.js'
 
-
 dotenv.config()
 const app = express(); 
 const port = process.env.PORT || 8000
