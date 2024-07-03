@@ -53,7 +53,7 @@ function SignIn() {
 
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input type="email" required placeholder='email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={HandleChange} />
-        <input type="password" required maxLength={20} minLength={8} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='password' onChange={HandleChange} />
+        <input type="password" required maxLength={20} minLength={6} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='password' onChange={HandleChange} />
         <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>{loading ? 'Loading...' : ' Sign In'}</button>
         <GoogleAuth/>
       </form>

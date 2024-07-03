@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import { getDownloadURL, getStorage, list, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from '../firebase'
 import { useDispatch } from 'react-redux'
-import {DeleteUserFailure,DeleteUserStart, DeleteUserSuccess,updateUserFailure, updateUserStart, updateUserSuccess,signOutUserStart,signOutUserSuccess,signOutUserFailure } from '../redux/userSlice'
+import { DeleteUserFailure, DeleteUserStart, DeleteUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess, signOutUserStart, signOutUserSuccess, signOutUserFailure } from '../redux/userSlice'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 function Profile() {
@@ -14,6 +14,7 @@ function Profile() {
   const [filePercentage, setFilePercentage] = useState(0)
   const [fileUploaderror, setFileError] = useState(false)
   const [formData, setFormData] = useState({})
+  const [listData, setListData] = useState([])
   const dispatch = useDispatch()
   console.log(formData)
   console.log("Percentage done :- ", filePercentage)
@@ -24,7 +25,7 @@ function Profile() {
   // allow write: if
   // request.resource.size < 2 * 1024 * 1024 && 
   // request.resource.contentType.matches('images/.*')
-console.log("userId",userId)
+  console.log("userId", userId)
   useEffect(() => {
     if (file) {
       handleFileUpload(file)
@@ -107,8 +108,8 @@ console.log("userId",userId)
         toast.error(data.message)
         return
       }
-    dispatch(updateUserSuccess(data.message))
-    toast.success("User updated successfully")
+      dispatch(updateUserSuccess(data.message))
+      toast.success("User updated successfully")
     } catch (error) {
       toast.error(error.message)
       dispatch(updateUserFailure(error.message));
@@ -133,6 +134,22 @@ console.log("userId",userId)
       dispatch(signOutUserFailure(error.message))
     }
   }
+
+  const handleShowList = async () => {
+    console.log(userId)
+    try {
+      const res = await fetch(`/api/user/listings/${userId}`)
+      const result = await res.json();
+      if (!res.ok) {
+        toast.error(res.message)
+      }
+      console.log(result)
+      setListData(result)
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -169,7 +186,31 @@ console.log("userId",userId)
         <span onClick={handleDelete} className='text-red-700 cursor-pointer'>Delete Account</span>
         <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign Out </span>
       </div>
+      <button className='text-green-700 w-full' onClick={handleShowList}>Create Listing</button>
+
+      {
+        listData && listData.length > 0 &&
+        listData.map((listing) => (
+          <div className="">
+              <h1 className='font-semibold text-4xl text-center mt-7'>Your Listing</h1>
+            <div key={listing._id} className="flex items-center justify-between border border-gray-800 rounded-lg p-3 mt-6">
+              <Link to={`/listing/${listing._id}`}>
+                <img className='w-16 h-16 object-contain ' src={listing.imageUrls[0]} alt="listImg" />
+              </Link>
+              <Link to={`/listing/${listing._id}`}>
+                <p className='text-slate-700 font-semibold  hover:opacity-75 hover:underline truncate flex-1'>{listing.name}</p>
+              </Link>
+              <div className=" flex flex-col font-semibold">
+                <button className='text-red-700'>Delete</button>
+                <button className='text-green-700'>Edit</button>
+              </div>
+            </div>
+          </div>
+        ))
+      }
     </div>
+
+
   )
 }
 
