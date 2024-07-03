@@ -195,7 +195,7 @@ function Profile() {
               <h1 className='font-semibold text-4xl text-center mt-7'>Your Listing</h1>
             <div key={listing._id} className="flex items-center justify-between border border-gray-800 rounded-lg p-3 mt-6">
               <Link to={`/listing/${listing._id}`}>
-                <img className='w-16 h-16 object-contain ' src={listing.imageUrls[0]} alt="listImg" />
+                <img className='w-16 h-16 object-contain hover:scale-105' src={listing.imageUrls[0]} alt="listImg" />
               </Link>
               <Link to={`/listing/${listing._id}`}>
                 <p className='text-slate-700 font-semibold  hover:opacity-75 hover:underline truncate flex-1'>{listing.name}</p>
