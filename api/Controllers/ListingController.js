@@ -53,7 +53,7 @@ export const UpdateListing = async (req, res) => {
 export const GetListing =async (req,res)=>{
 try {
     const listing = await Listing.findById(req.params.id)
-    console.log(listing)
+    console.log("listing",listing)
     if(!listing){
         res.status(404).json({ status: false, message:"Listing not found"})
     }

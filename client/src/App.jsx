@@ -10,6 +10,7 @@ import Footer from './Components/Footer/Footer'
 import CreateListing from './Pages/CreateListing'
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import UpdateListing from './Pages/UpdateListing'
+import ListingPage from './Pages/ListingPage'
 export default function App() {
   return <BrowserRouter>
     <Header />
@@ -20,9 +21,10 @@ export default function App() {
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/profile' element={<Profile />} />
-        <Route path='/updateListing/:id' element={<UpdateListing/>}/>
+        <Route path='/updateListing/:id' element={<UpdateListing />} />
+        <Route path='/listing/:id' element={<ListingPage />} />
+        <Route path='/create-listing' element={<CreateListing />} />
       </Route>
-      <Route path='/create-listing' element={<CreateListing />} />
     </Routes>
     <Footer />
   </BrowserRouter>
