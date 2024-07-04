@@ -4,7 +4,7 @@ import { getDownloadURL, getStorage, list, ref, uploadBytesResumable } from 'fir
 import { app } from '../firebase'
 import { useDispatch } from 'react-redux'
 import { DeleteUserFailure, DeleteUserStart, DeleteUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess, signOutUserStart, signOutUserSuccess, signOutUserFailure } from '../redux/userSlice'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 function Profile() {
   const fileRef = useRef(null)
@@ -16,7 +16,7 @@ function Profile() {
   const [formData, setFormData] = useState({})
   const [listData, setListData] = useState([])
   const dispatch = useDispatch()
-  console.log(formData)
+
   console.log("Percentage done :- ", filePercentage)
   console.log(fileUploaderror)
 
@@ -90,11 +90,10 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("UserId :- ", currentUser)
     try {
-      // dispatch(updateUserStart())
+      dispatch(updateUserStart())
       const res = await fetch(`/api/user/update/${userId}`, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -106,7 +105,6 @@ function Profile() {
       if (data.success === false) {
         dispatch(updateUserFailure(data.message))
         toast.error(data.message)
-        return
       }
       dispatch(updateUserSuccess(data.message))
       toast.success("User updated successfully")
@@ -204,7 +202,7 @@ function Profile() {
         <span onClick={handleDelete} className='text-red-700 cursor-pointer'>Delete Account</span>
         <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign Out </span>
       </div>
-      <button className='text-green-700 w-full' onClick={handleShowList}>Create Listing</button>
+      <button className='text-green-700 w-full font-bold text-2xl' onClick={handleShowList}>Show Listing</button>
 
       {
         listData && listData.length > 0 &&
@@ -220,7 +218,9 @@ function Profile() {
               </Link>
               <div className=" flex flex-col font-semibold">
                 <button onClick={() => hadnleListingDelete(listing._id)} className='text-red-700'>Delete</button>
+                <Link to={`/updateListing/${listing._id}`}>
                 <button className='text-green-700'>Edit</button>
+                </Link>
               </div>
             </div>
 
