@@ -42,17 +42,33 @@ export const deleteUser = async (req, res) => {
 
 export const getListing = async (req, res) => {
     if (req.user.id === req.params.id) {
-        console.log("userid",req.user.id)
-        console.log("parameter id",req.params.id)
+        console.log("userid", req.user.id)
+        console.log("parameter id", req.params.id)
         try {
-            const listing = await Listing.find({userRef:req.params.id});
+            const listing = await Listing.find({ userRef: req.params.id });
             res.status(200).json(listing)
-        } catch (error) { 
-            res.status(500).json({ error: error.message})
+        } catch (error) {
+            res.status(500).json({ error: error.message })
         }
     }
     else {
         res.status(500).json({ success: false, message: 'Failed to fetch list' })
+    }
+
+}
+
+export const getUser = async (req, res) => {
+
+    const user = await User.findById(req.params.id)
+    try {
+        if (!user) {
+            res.status(404).json({ success: false, message: 'User not found' })
+        }
+
+        const { password: pass, ...rest } = user._doc
+        res.status(200).json(rest)
+    } catch (error) {
+        res.json({ success: false, message: 'Something went wrong' })
     }
 
 }

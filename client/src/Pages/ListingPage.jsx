@@ -5,10 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css/bundle'
-import { FaBath, FaBed, FaChair, FaParking, FaShare } from 'react-icons/fa'
-
+import { FaBath, FaBed, FaChair, FaLandmark, FaParking, FaShare } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
+import Contect from '../Components/Contect/Contect'
 function ListingPage() {
     SwiperCore.use([Navigation])
+    const {currentUser} = useSelector((state) => state.user)
+    const userId = currentUser?.data?._id;
     const [listing, setListing] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
@@ -78,7 +81,7 @@ function ListingPage() {
                                 {listing.type === 'rent' ? 'rent' && ' / month ' : 'sale' && ' / month '}
                             </p>
 
-                            <p className='flex items-center mt-6 gap-2 text-slate-600 text-sm'>
+                            <p className='flex items-center mt-6 gap-2 text-slate-600 text-sm'> <FaLandmark className='text-green-700 font-semibold text-lg'/>
                                 {listing.address}
                             </p>
                             <div className="flex gap-4">
@@ -114,10 +117,15 @@ function ListingPage() {
                                     {listing.furnished ? 'Furnished' : 'Un Furnished'}
                                 </li>
                             </ul>
-                            
+                                {
+                                    currentUser && listing.userRef !== userId && !contect && (
+                                        <button onClick={()=>setContect(true)} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>Contect Landlord</button>
+                                    )
+                                }
+
+                                {contect && <Contect listing={listing}/>}
+
                         </div>
-
-
                     </>
                 )
             }
