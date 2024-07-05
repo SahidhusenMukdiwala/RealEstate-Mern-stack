@@ -11,6 +11,7 @@ import CreateListing from './Pages/CreateListing'
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import UpdateListing from './Pages/UpdateListing'
 import ListingPage from './Pages/ListingPage'
+import Search from './Pages/Search'
 export default function App() {
   return <BrowserRouter>
     <Header />
@@ -26,6 +27,7 @@ export default function App() {
       </Route>
         <Route path='/listing/:id' element={<ListingPage />} />
         <Route path='/create-listing' element={<CreateListing />} />
+        <Route path='/search' element={<Search/>}/> 
     </Routes>
     <Footer />
   </BrowserRouter>
