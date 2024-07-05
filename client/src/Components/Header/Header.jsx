@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import Logo from '../../assets/logo.jpg'
 export default function Header() {
   const { currentUser } = useSelector(state => state.user)
+  // const currentuserAvatar = currentUser?.data?.avatar;
+  // console.log("avatar",currentuserAvatar)
   return (
     <header className='bg-slate-200 shadow-md'>
       <div className="flex items-center justify-between max-w-6xl mx-auto p-3">
@@ -22,7 +24,7 @@ export default function Header() {
           <Link to='/about'> <li className='hidden sm:inline text-slate-700 hover:underline'>About</li></Link>
           <Link to='/profile'>{
             currentUser ? (
-              <img className='rounded-full w-7 h-7 object-cover' src={currentUser.avatar} alt="" />
+              <img className='rounded-full w-7 h-7 object-cover' src={currentUser?.data?.avatar} alt="" />
             ) : (
               <li className=' text-slate-700 hover:underline'> Sign in</li>
             )

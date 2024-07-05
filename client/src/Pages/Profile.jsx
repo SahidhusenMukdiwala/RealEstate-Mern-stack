@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 function Profile() {
   const fileRef = useRef(null)
   const { currentUser } = useSelector((state) => state.user)
+  // console.log(currentUser)
   const userId = currentUser?.data?._id;
   const [file, setFile] = useState(undefined)
   const [filePercentage, setFilePercentage] = useState(0)
@@ -173,7 +174,7 @@ function Profile() {
 
         <input onChange={(e) => setFile(e.target.files[0])} type="file" hidden id="" ref={fileRef} accept='image/*' />
 
-        <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser.avatar} alt="Profile" className='w-24 h-24 self-center cursor-pointer border border-red-700 rounded-full hover:shadow-2xl' />
+        <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser?.data?.avatar} alt="Profile" className='w-24 h-24 self-center cursor-pointer border border-red-700 rounded-full hover:shadow-2xl' />
 
         <p className='text-sm self-center'>
           {fileUploaderror ?
