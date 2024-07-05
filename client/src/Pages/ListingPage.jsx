@@ -100,19 +100,19 @@ function ListingPage() {
                             </p>
 
                             <ul className='flex items-center gap-3 flex-wrap'>
-                                <li className='flex items-center whitespace-nowrap gap-1 text-gray-600'>
+                                <li className='flex items-center whitespace-nowrap gap-1 text-green-700'>
                                     <FaBed className='text-lg'/> 
                                     {listing.bedrooms} Bed
                                 </li>
-                                <li className='flex items-center whitespace-nowrap gap-1 text-gray-600'>
+                                <li className='flex items-center whitespace-nowrap gap-1 text-green-700'>
                                     <FaBath className='text-lg'/> 
                                     {listing.bathrooms} Bath
                                 </li>
-                                <li className='flex items-center whitespace-nowrap gap-1 text-gray-600'>
+                                <li className='flex items-center whitespace-nowrap gap-1 text-green-700'>
                                     <FaParking className='text-lg'/> 
                                     {listing.parking ? 'Parking Spot' : 'No Parking Spot'}
                                 </li>
-                                <li className='flex items-center whitespace-nowrap gap-1 text-gray-600'>
+                                <li className='flex items-center whitespace-nowrap gap-1 text-green-700'>
                                     <FaChair className='text-lg'/> 
                                     {listing.furnished ? 'Furnished' : 'Un Furnished'}
                                 </li>
