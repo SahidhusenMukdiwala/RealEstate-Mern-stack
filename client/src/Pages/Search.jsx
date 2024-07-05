@@ -100,19 +100,20 @@ function Search() {
         const moreListing = listing.length;
         const StartIndex = moreListing;
         const urlParams = new URLSearchParams(location.search);
-        useParams.set('StartIndex',StartIndex)
+        urlParams.set('StartIndex',StartIndex)
         const searchQuery = urlParams.toString();
-        const res =await fetch(`/api/listing/${searchQuery}`)
+        console.log(searchQuery)
+        const res =await fetch(`/api/listing/get?${searchQuery}`)
 
         const result = await res.json();
-
+        console.log(result)
         if(result.length < 9){
             setShoeMore(true);
         }
         else{
             setShoeMore(false)
         }
-        setListing({...listing,...result})
+        setListing([...listing,...result])
     }
     return (
         <div className="flex flex-col md:flex-row  ">
