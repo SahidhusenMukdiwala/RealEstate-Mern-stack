@@ -26,14 +26,10 @@ function ListingCard({ listings }) {
                             
                         </div>
                         <div className="font-bold  text-green-600">
-                            <p>{listings.bathrooms > 1 ? `${listings.bathrooms} Baths` : `${listings.bathrooms} Baths`}</p>
-                            
+                            <p>{listings.bathrooms > 1 ? `${listings.bathrooms} Baths` : `${listings.bathrooms} Baths`}</p>    
                         </div>
                     </div>
                     </div>
-
-
-
                 </div>
             </Link>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import ListingCard from '../Components/Card/ListingCard'
 
@@ -7,6 +7,7 @@ function Search() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [listing, setListing] = useState([])
+    const [shoeMore, setShoeMore] = useState(false)
     const [sideBarData, setSideBarData] = useState({
         searchTerm: "",
         type: 'all',
@@ -49,6 +50,9 @@ function Search() {
                 if (!res.ok) {
                     toast.error(res.message)
                 }
+                if(result.length > 8){
+                    setShoeMore(true)
+                }
                 setListing(result)
                 setLoading(false);
             } catch (error) {
@@ -89,6 +93,26 @@ function Search() {
         const searchQuery = urlParams.toString()
         navigate(`/search?${searchQuery}`)
 
+    }
+
+    const showMoreClick = async() =>{
+        setShoeMore(false)
+        const moreListing = listing.length;
+        const StartIndex = moreListing;
+        const urlParams = new URLSearchParams(location.search);
+        useParams.set('StartIndex',StartIndex)
+        const searchQuery = urlParams.toString();
+        const res =await fetch(`/api/listing/${searchQuery}`)
+
+        const result = await res.json();
+
+        if(result.length < 9){
+            setShoeMore(true);
+        }
+        else{
+            setShoeMore(false)
+        }
+        setListing({...listing,...result})
     }
     return (
         <div className="flex flex-col md:flex-row  ">
@@ -161,7 +185,9 @@ function Search() {
                         ))
                     }
                 </div>
-
+                    <div className="">{
+                        shoeMore && <button className='text-green-700 hover:underline p-7 w-full text-center' onClick={showMoreClick}>Show More..</button>
+                        }</div>
             </div>
         </div>
     )
