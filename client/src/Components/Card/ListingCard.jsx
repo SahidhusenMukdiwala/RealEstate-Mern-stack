@@ -18,7 +18,8 @@ function ListingCard({ listings }) {
                         <p className='text-sm text-gray-700 line-clamp-3'>{listings.description}</p>
                         <p className='text-slate-500 font-semibold mt-2'>$
                             {listings.offers ? listings.discountPrice.toLocaleString('en-Us') : listings.regularPrice.toLocaleString('en-Us')}
-                            {listings.type === 'rent' && ' / Month'}
+                            {listings.type === 'rent' && ' (Rent) / Month'}
+                            {listings.type === 'sale' && ' / Month'}
                             </p>
                     <div className="flex gap-2 mt-3">
                         <div className=" font-bold  text-green-600">
