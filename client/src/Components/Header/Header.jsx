@@ -29,13 +29,17 @@ const navigate = useNavigate()
         <Link to='/'>
           <img src={Logo} className='w-[60px] h-[60px] rounded-[50%] transition ease-in-out delay-150 hover:cursor-pointer hover:rounded-[10%] hover:scale-[1.1] hover:overflow-hidden duration-300 sm:h-[100px] sm:w-[100px]' alt="Logo" />
         </Link>
-
-        <form action="" className='bg-slate-100 p-3 rounded-lg flex items-center'>
+{
+  currentUser ? (
+<form action="" className='bg-slate-100 p-3 rounded-lg flex items-center'>
           <input type="text" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} placeholder='Search ..' className='bg-transparent focus:outline-none w-24 sm:w-64' />
           <button onClick={handleSeacrch}>
           <FaSearch className='text-slate-600' />
           </button>
         </form>
+  ) : ""
+}
+        
 
         <ul className='flex gap-4'>
           <Link to='/'><li className='hidden sm:inline text-slate-700 hover:underline'>Home</li></Link>
