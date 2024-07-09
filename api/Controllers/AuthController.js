@@ -11,7 +11,6 @@ export const signup = async (req, res, next) => {
     try {
         let user = null
         // checking user is doctor or patient : - 
-
         if (role === 'user') {
             user = await User.findOne({ email })
         }
@@ -20,7 +19,7 @@ export const signup = async (req, res, next) => {
         }
         // checking user exist
         if (user) {
-            return res.status(400).json({ message: 'User already exists' })
+             return res.status(400).json({ message: 'User already exists' })
         }
         const hashPass = bcrypt.hashSync(password, 10)
         if (role === 'user') {

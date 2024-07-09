@@ -4,10 +4,9 @@ import GoogleAuth from './GoogleAuth'
 import { toast } from 'react-toastify'
 
 function SignIn() {
-  const [role, setrole] = useState('user');
+  const [role, setRole] = useState('user');
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
-
   const HandleChange = (e) => {
     setFormData({
       ...formData,
@@ -15,9 +14,20 @@ function SignIn() {
     })
   }
 
+  const handleRoleChange = (e) => {
+    const { value } = e.target;
+    setRole(value);
+    setFormData({
+      ...formData,
+      role: value
+    });
+  };
+
+
   const navigate = useNavigate()
   const HandleSubmit = async (e) => {
     e.preventDefault()
+    console.log("role is :-",role)
     try {
       setLoading(true)
       const res = await fetch('/api/auth/signup',
@@ -57,7 +67,9 @@ function SignIn() {
           <select
             name="role"
             id='role'
-            onChange={(e) => setrole(e.target.value)}
+            value={role}
+            onChange={handleRoleChange}
+            // onChange={(e) => setRole(e.target.value)}
             required
             className='w-full'
           >

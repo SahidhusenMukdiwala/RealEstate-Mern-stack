@@ -44,7 +44,7 @@ const navigate = useNavigate()
         <ul className='flex gap-4'>
           <Link to='/'><li className='hidden sm:inline text-slate-700 hover:underline'>Home</li></Link>
           <Link to='/about'> <li className='hidden sm:inline text-slate-700 hover:underline'>About</li></Link>
-          <Link to='/profile'>{
+          <Link to='/users/profile/me'>{
             currentUser ? (
               <img className='rounded-full w-7 h-7 object-cover' src={currentUser?.data?.avatar} alt="" />
             ) : (
