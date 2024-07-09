@@ -11,6 +11,8 @@ function Profile() {
   const { currentUser } = useSelector((state) => state.user)
   // console.log(currentUser)
   const userId = currentUser?.data?._id;
+  const userRole = currentUser?.data?.role;
+  const userName = currentUser?.data?.username;
   const [file, setFile] = useState(undefined)
   const [filePercentage, setFilePercentage] = useState(0)
   const [fileUploaderror, setFileError] = useState(false)
@@ -134,42 +136,43 @@ function Profile() {
     }
   }
 
-  const handleShowList = async () => {
-    console.log(userId)
-    try {
-      const res = await fetch(`/api/user/listings/${userId}`)
-      const result = await res.json();
-      if (!res.ok) {
-        toast.error(res.message)
-      }
-      console.log(result)
-      setListData(result)
-    } catch (error) {
-      toast.error(error.message)
-    }
-  }
+  // const handleShowList = async () => {
+  //   console.log(userId)
+  //   try {
+  //     const res = await fetch(`/api/user/listings/${userId}`)
+  //     const result = await res.json();
+  //     if (!res.ok) {
+  //       toast.error(res.message)
+  //     }
+  //     console.log(result)
+  //     setListData(result)
+  //   } catch (error) {
+  //     toast.error(error.message)
+  //   }
+  // }
 
-  const hadnleListingDelete = async (listingId) => {
-    try {
+  // const hadnleListingDelete = async (listingId) => {
+  //   try {
 
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
-        method: 'DELETE',
-      })
-      const result = await res.json();
-      if (!res.ok) {
-        toast.error(res.message)
-      }
-      toast.success("Successfully deleted ...")
-      setListData((prev) => prev.filter((listing) => listing._id !== listingId))
-    } catch (error) {
-      toast.error(error.message)
-    }
+  //     const res = await fetch(`/api/listing/delete/${listingId}`, {
+  //       method: 'DELETE',
+  //     })
+  //     const result = await res.json();
+  //     if (!res.ok) {
+  //       toast.error(res.message)
+  //     }
+  //     toast.success("Successfully deleted ...")
+  //     setListData((prev) => prev.filter((listing) => listing._id !== listingId))
+  //   } catch (error) {
+  //     toast.error(error.message)
+  //   }
 
-  }
+  // }
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
+  
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
 
         <input onChange={(e) => setFile(e.target.files[0])} type="file" hidden id="" ref={fileRef} accept='image/*' />
@@ -188,25 +191,30 @@ function Profile() {
                 " "
           }
         </p>
+        <h1 className='text-center my-3 font-mono uppercase'>{userName} ({userRole})</h1>
         <input defaultValue={currentUser.email} type="text" placeholder='Username' className='border p-3 rounded-lg focus:outline-none' id='username' onChange={hadnleChange} />
         <input disabled defaultValue={currentUser.username} type="email" placeholder='Email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={hadnleChange} />
         <input disabled defaultValue={currentUser.password} type="password" maxLength={20} minLength={6} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='passwor' onChange={hadnleChange} />
         <button onChange={handleSubmit} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           Update User
         </button>
-        <Link to={'/create-listing'} className='bg-green-700 text-center text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
-          Create Listing
-        </Link>
+        {
+          userRole === 'agent' ? (
+            <Link to={'/create-listing'} className='bg-green-700 text-center text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
+            Create Listing
+          </Link>
+          ) : ""
+        }
+      
       </form>
 
       <div className="flex gap-2 justify-between mt-5">
         <span onClick={handleDelete} className='text-red-700 cursor-pointer'>Delete Account</span>
         <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign Out </span>
       </div>
-      <button className='text-green-700 w-full font-bold text-2xl' onClick={handleShowList}>Show Listing</button>
+      {/* <button className='text-green-700 w-full font-bold text-2xl' onClick={handleShowList}>Show Listing</button> */}
 
-      {
-        listData && listData.length > 0 &&
+      {/* {listData && listData.length > 0 &&
         <div className="">
           <h1 className='font-semibold text-4xl text-center mt-7'>Your Listing</h1>
           {
@@ -228,7 +236,7 @@ function Profile() {
             ))}
         </div>
 
-      }
+      } */}
     </div>
 
 

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import Logo from '../../assets/logo.jpg'
 export default function Header() {
   const { currentUser } = useSelector(state => state.user)
+  const userRole = currentUser?.data?.role;
   const [searchTerm,setSearchTerm] = useState('')
 const navigate = useNavigate()
   const handleSeacrch = (e) => {
@@ -44,7 +45,7 @@ const navigate = useNavigate()
         <ul className='flex gap-4'>
           <Link to='/'><li className='hidden sm:inline text-slate-700 hover:underline'>Home</li></Link>
           <Link to='/about'> <li className='hidden sm:inline text-slate-700 hover:underline'>About</li></Link>
-          <Link to='/users/profile/me'>{
+          <Link to={`${userRole === 'agent' ? '/agents/profile/me' :'/users/profile/me'}`}>{
             currentUser ? (
               <img className='rounded-full w-7 h-7 object-cover' src={currentUser?.data?.avatar} alt="" />
             ) : (

@@ -240,6 +240,7 @@ function CreateListing() {
                         <input className='p-3 border border-gray-300 rounded w-full' type="file" id="images" accept='images/*' multiple onChange={(e) => { setFile(e.target.files) }} />
                         <button disabled={upload} type='button' onClick={handleImageSubmit} className='p-3  text-green-700 border  border-green-700 rounded hover:shadow-lg uppercase disabled:opacity-80'>{upload ? 'Uploading ....' : 'Upload'}</button>
                     </div>
+                    <p className='text-red-700 text-sm'>Please Upload Image under (2MB)</p>
                     <p className='text-red-700 text-sm'>{imageerrorMessage && imageerrorMessage}</p>
                     {
                         formData.imageUrls.length > 0 && formData.imageUrls.map((url, index) => (

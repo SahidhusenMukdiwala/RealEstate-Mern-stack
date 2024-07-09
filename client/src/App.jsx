@@ -12,6 +12,7 @@ import PrivateRoute from './PrivateRoute/PrivateRoute'
 import UpdateListing from './Pages/UpdateListing'
 import ListingPage from './Pages/ListingPage'
 import Search from './Pages/Search'
+import Dashboard from './Pages/Dashboard'
 export default function App() {
   return <BrowserRouter>
     <Header />
@@ -26,7 +27,10 @@ export default function App() {
       </Route>
 
       <Route element={<PrivateRoute allowedRoles={['user']} />} >
-        <Route path='/users/profile/me' element={<Profile />} />
+      <Route path='/users/profile/me' element={<Profile />} />
+      </Route>
+      <Route element={<PrivateRoute allowedRoles={['agent']} />} >
+      <Route path='/agents/profile/me' element={<Dashboard />} />
       </Route>
       <Route path='/listing/:id' element={<ListingPage />} />
       <Route path='/create-listing' element={<CreateListing />} />

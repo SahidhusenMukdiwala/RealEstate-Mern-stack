@@ -7,6 +7,7 @@ function SignIn() {
   const [role, setRole] = useState('user');
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
+  console.log(formData)
   const HandleChange = (e) => {
     setFormData({
       ...formData,
@@ -73,6 +74,7 @@ function SignIn() {
             required
             className='w-full'
           >
+            <option value="">--- Select Role----</option>
             <option value="user">User</option>
             <option value="agent">Agent</option>
           </select>

@@ -45,7 +45,7 @@ export const signup = async (req, res, next) => {
 
         console.log(user)
         await user.save()
-        res.status(200).json({ success: true, message: 'User successfully created' })
+        res.status(200).json({ success: true, message: 'User successfully created',data:user })
     } catch (error) {
         res.status(500).json({ success: false, message: 'Internal Server Error' })
         console.log(error)
@@ -91,7 +91,7 @@ export const signin = async (req, res) => {
             return res.status(401).json({ message: false, message: 'Incorrect password ' })
         }
         console.log("passcheck successful")
-        const { password, ...rest } = user._doc // extract password
+        const { password,...rest } = user._doc // extract password
         console.log("pass", password)
 
         const token = Jwt.sign({

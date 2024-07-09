@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/create/agentInfo',CreateAgent)
 router.get('/agents', VerifyToken,getAllAgents);
 router.get('/agents/:id', VerifyToken,getAgentById);
-router.put('/agents/:id', VerifyToken,updateAgentById);
-router.delete('/agents/:id',VerifyToken,deleteAgentById);
+router.put('/agents/update/:id', VerifyToken,updateAgentById);
+router.delete('/agents/delete/:id',VerifyToken,deleteAgentById);
 
 export default router;
