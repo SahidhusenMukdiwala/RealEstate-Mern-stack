@@ -4,6 +4,7 @@ import GoogleAuth from './GoogleAuth'
 import { toast } from 'react-toastify'
 
 function SignIn() {
+  const [role, setrole] = useState('user');
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
 
@@ -35,9 +36,9 @@ function SignIn() {
         alert(result.error)
       }
       setLoading(false)
-    toast.success(result.message)
-    navigate('/sign-in')
-  } catch (error) {
+      toast.success(result.message)
+      navigate('/sign-in')
+    } catch (error) {
       toast.error(error.message)
       alert(error.message)
     }
@@ -51,6 +52,70 @@ function SignIn() {
         <input type="text" required placeholder='Username' className='border p-3 rounded-lg focus:outline-none' id='username' onChange={HandleChange} />
         <input type="email" required placeholder='email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={HandleChange} />
         <input type="password" required maxLength={20} minLength={6} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='password' onChange={HandleChange} />
+        <div className="flex flex-col gap-4">
+          <label>User Type:</label>
+          <select
+            name="role"
+            id='role'
+            onChange={(e) => setrole(e.target.value)}
+            required
+            className='w-full'
+          >
+            <option value="user">User</option>
+            <option value="agent">Agent</option>
+          </select>
+        </div>
+
+        {role === 'agent' && (
+          <>
+            <div className='w-full'>
+              <label>Phone:</label>
+              <input className='w-full border p-3'
+              placeholder='Enter phone number'
+                type="number"
+                name="phone"
+                id='phone'
+                onChange={HandleChange}
+                required={role === 'agent'}
+              />
+            </div>
+            <div>
+              <label>License Number:</label>
+              <input className='w-full border p-3'
+              placeholder='Enter License Number'
+                type="number"
+                name="licenseNumber"
+                id='licenseNumber'
+                onChange={HandleChange}
+                required={role === 'agent'}
+              />
+            </div>
+            <div>
+              <label>Agency:</label>
+              <input
+              className='w-full border p-3'
+              placeholder='Enter Agency Name'
+                type="text"
+                name="agency"
+                id='agency'
+                onChange={HandleChange}
+                required={role === 'agent'}
+              />
+            </div>
+            <div>
+              <label>Bio:</label>
+              <textarea
+              className='w-full border p-3'
+              placeholder='Enter Your Bio'
+                name="bio"
+                id='bio'
+                onChange={HandleChange}
+                required={role === 'agent'}
+              ></textarea>
+            </div>
+          </>
+        )}
+
         <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           {
             loading ? 'Loading...' : ' Sign Up'

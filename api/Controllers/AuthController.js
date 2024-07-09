@@ -1,40 +1,91 @@
 import User from '../Models/UserSchema.js'
 import bcrypt from 'bcryptjs'
-import { response } from 'express'
+import Agent from '../Models/AgentSchema.js'
 import Jwt from 'jsonwebtoken'
 
 
 export const signup = async (req, res, next) => {
-    const { username, email, password } = req.body
-    // hashing password
-    const hashPass = bcrypt.hashSync(password, 10)
-
+    const { username, email, password,role,licenseNumber,agency,phone } = req.body
+        console.log(req.body)
+        console.log(role)
     try {
-        const newUser = new User({ username, email, password: hashPass })
-        await newUser.save()
+        let user = null
+        // checking user is doctor or patient : - 
 
+        if (role === 'user') {
+            user = await User.findOne({ email })
+        }
+        else if (role === 'agent') {
+            user = await Agent.findOne({ email })
+        }
+        // checking user exist
+        if (user) {
+            return res.status(400).json({ message: 'User already exists' })
+        }
+        const hashPass = bcrypt.hashSync(password, 10)
+        if (role === 'user') {
+            user = new User({
+                username,
+                email,
+                password: hashPass,
+                role
+            })
+        }
 
-        res.status(200).json({ success: true, message: 'User Created successfully', data: newUser })
+        if (role === 'agent') {
+            user = new Agent({
+                username,
+                email,
+                password: hashPass,
+                role,
+                licenseNumber,
+                phone,
+                agency
+            })
+        }
+
+        console.log(user)
+        await user.save()
+        res.status(200).json({ success: true, message: 'User successfully created' })
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Internal Server Error' })
+        console.log(error)
     }
-    catch (error) {
-        res.status(500).json({ success: false, message: 'Invalid Credentials !!! Please Check' })
 
-    }
+    // try {
+    //     const newUser = new User({ username, email, password: hashPass })
+    //     await newUser.save()
+
+
+    //     res.status(200).json({ success: true, message: 'User Created successfully', data: newUser })
+    // }
+    // catch (error) {
+    //     res.status(500).json({ success: false, message: 'Invalid Credentials !!! Please Check' })
+
+    // }
 }
 
 export const signin = async (req, res) => {
-    const email = req.body.email
-    console.log(email)
+    // const email = req.body.email
+    // console.log(email)
+    const { email, password,licenseNumber } = req.body
     try {
-        const user = await User.findOne({ email })
-        console.log(user)
-
-        if (!user) {
-            return res.status(404).json({ message: false, message: 'User not found' })
-
-        }
+            let user = null;
+            const users = await User.findOne({ email })
+            const agent = await Agent.findOne({ email ,licenseNumber})
+    
+            if (users) {
+                user = users;
+            }
+            if (agent) {
+                user = agent
+            }
+            if (!user) {
+                return res.status(404).send({ message: 'User Not Found' })
+            }
         // error handling done
         const checkCorrectPass = bcrypt.compareSync(req.body.password, user.password)
+        
         console.log("checkCorrectPass", checkCorrectPass)
 
         if (!checkCorrectPass) {

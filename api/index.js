@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import userRouter from '../api/routes/user.js'
 import authRouter from '../api/routes/Auth.js'
 import listingRouter from '../api/routes/listing.js'
+import agentRouter from '../api/routes/Agent.js'
 
 dotenv.config()
 const app = express(); 
@@ -17,6 +18,7 @@ app.use(express.json()); // This allow json as a input at the server side
 app.use(cookieParser())
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
+app.use('/api/agent',agentRouter)
 app.use('/api/listing',listingRouter)
 
 
