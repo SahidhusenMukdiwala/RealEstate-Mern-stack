@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
@@ -12,6 +12,7 @@ function ListingPage() {
     SwiperCore.use([Navigation])
     const {currentUser} = useSelector((state) => state.user)
     const userId = currentUser?.data?._id;
+    const userName = currentUser?.data?.username;
     const [listing, setListing] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
@@ -71,6 +72,10 @@ function ListingPage() {
                             }} />
                         </div>
                         <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
+                            <div className=" flex flex-col flex-wrap gap-2 items-center  ">
+                        <p className='my-3 font-serif text-3xl text-slate-700 text-center'>Property Listed By :- {userName}</p>
+                            <Link to={'/agent/review'} className='font-semibold bg-gray-600 text-white p-3 rounded-full '>Give Review</Link>
+                            </div>
                             <p className='text-2xl font-semibold'>
                                 {listing.name.toUpperCase()} - ${' '}
                                 {
@@ -117,6 +122,8 @@ function ListingPage() {
                                     {listing.furnished ? 'Furnished' : 'Un Furnished'}
                                 </li>
                             </ul>
+
+                          
                                 {
                                     currentUser && listing.userRef !== userId && !contect && (
                                         <button onClick={()=>setContect(true)} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>Contect Landlord</button>

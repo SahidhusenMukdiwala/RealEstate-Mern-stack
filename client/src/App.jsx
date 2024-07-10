@@ -13,6 +13,7 @@ import UpdateListing from './Pages/UpdateListing'
 import ListingPage from './Pages/ListingPage'
 import Search from './Pages/Search'
 import Dashboard from './Pages/Dashboard'
+import Review from './Components/Review/Review'
 export default function App() {
   return <BrowserRouter>
     <Header />
@@ -35,6 +36,7 @@ export default function App() {
       </Route>
       <Route path='/listing/:id' element={<ListingPage />} />
       <Route path='/search' element={<Search />} />
+      <Route path='/agent/review' element={<Review />} />
     </Routes>
     <Footer />
   </BrowserRouter>
