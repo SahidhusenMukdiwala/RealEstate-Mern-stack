@@ -3,6 +3,6 @@ import { CreateReview } from '../Controllers/ReviewController.js';
 import { VerifyToken } from '../Utils/verifyUser.js';
 const router = express.Router()
 
-router.post ('/reviews',VerifyToken,CreateReview)
+router.post ('/reviews/:ListingId',VerifyToken,CreateReview)
 
 export default router

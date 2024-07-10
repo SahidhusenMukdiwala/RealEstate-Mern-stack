@@ -36,7 +36,6 @@ export default function App() {
       </Route>
       <Route path='/listing/:id' element={<ListingPage />} />
       <Route path='/search' element={<Search />} />
-      <Route path='/agent/review' element={<Review />} />
     </Routes>
     <Footer />
   </BrowserRouter>

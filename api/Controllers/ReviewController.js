@@ -1,10 +1,25 @@
 import Review from "../Models/ReviewSchema.js"
+import Listing from "../Models/ListingSchema.js"
 
 export const CreateReview = async(req, res, ) =>{
-    const { propertyId, userId, rating, comment } = req.body;
-    // const createRev = new Review.create({propertyId, userId, rating, comment})
-    const createRev = new Review({propertyId, userId, rating, comment})
-    const saveRev = await createRev.save()
-    console.log(saveRev)
-    res.status(200).json({success: true,message: "Review created successfully",data: saveRev})
+    const ListingId = req.params.ListingId;
+    const userId = req.user.id;
+    console.log(ListingId)
+    const newReview = new Review({
+        ...req.body,
+        userId: userId,
+        ListingId: ListingId
+    });
+    try {
+        const savedReview = await newReview.save()
+        await Listing.findByIdAndUpdate(ListingId,{
+            $push:{reviews: savedReview._id}
+        })
+
+        res.status(200).json({success: true,message: "Review created successfully",data: savedReview})
+    } catch (error) {
+        res.status(500).json({error: error.message})            
+    }
 }
+
+
