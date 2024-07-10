@@ -5,7 +5,7 @@ import { signInStart, signInFailure, signInSuccess } from '../redux/userSlice.js
 import GoogleAuth from './GoogleAuth.jsx'
 import { toast } from 'react-toastify'
 function SignIn() {
-  const [role, setrole] = useState('user');
+  const [role, setrole] = useState('');
   const [formData, setFormData] = useState({})
   const { loading, error } = useSelector((state) => state.user)
   const navigate = useNavigate()
@@ -65,6 +65,7 @@ function SignIn() {
             required
              className='w-full'
           >
+            <option value="">--- Select Role ---</option>
             <option value="user">User</option>
             <option value="agent">Agent</option>
           </select>
