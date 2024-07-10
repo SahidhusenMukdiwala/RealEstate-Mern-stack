@@ -13,11 +13,13 @@ function Profile() {
   const userId = currentUser?.data?._id;
   const userRole = currentUser?.data?.role;
   const userName = currentUser?.data?.username;
+  const UserEmail = currentUser?.data?.email;
+  const UserPass = currentUser?.data?.password;
   const [file, setFile] = useState(undefined)
   const [filePercentage, setFilePercentage] = useState(0)
   const [fileUploaderror, setFileError] = useState(false)
   const [formData, setFormData] = useState({})
-  const [listData, setListData] = useState([])
+  // const [listData, setListData] = useState([])
   const dispatch = useDispatch()
 
   console.log("Percentage done :- ", filePercentage)
@@ -192,9 +194,9 @@ function Profile() {
           }
         </p>
         <h1 className='text-center my-3 font-mono uppercase'>{userName} ({userRole})</h1>
-        <input defaultValue={currentUser.email} type="text" placeholder='Username' className='border p-3 rounded-lg focus:outline-none' id='username' onChange={hadnleChange} />
-        <input disabled defaultValue={currentUser.username} type="email" placeholder='Email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={hadnleChange} />
-        <input disabled defaultValue={currentUser.password} type="password" maxLength={20} minLength={6} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='passwor' onChange={hadnleChange} />
+        <input defaultValue={userName} type="text" placeholder='Username' className='border p-3 rounded-lg focus:outline-none' id='username' onChange={hadnleChange} />
+        <input disabled defaultValue={UserEmail} type="email" placeholder='Email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={hadnleChange} />
+        <input disabled defaultValue={UserPass} type="password" maxLength={20} minLength={6} placeholder='password' className='border p-3 rounded-lg focus:outline-none' id='passwor' onChange={hadnleChange} />
         <button onChange={handleSubmit} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>
           Update User
         </button>
