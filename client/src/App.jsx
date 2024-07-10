@@ -22,18 +22,18 @@ export default function App() {
       <Route element={<PrivateRoute allowedRoles={['user', 'agent']} />} >
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
-        <Route path='/updateListing/:id' element={<UpdateListing />} />
         <Route path='/listing/:id' element={<ListingPage />} />
       </Route>
 
       <Route element={<PrivateRoute allowedRoles={['user']} />} >
-      <Route path='/users/profile/me' element={<Profile />} />
+        <Route path='/users/profile/me' element={<Profile />} />
       </Route>
       <Route element={<PrivateRoute allowedRoles={['agent']} />} >
-      <Route path='/agents/profile/me' element={<Dashboard />} />
+        <Route path='/agents/profile/me' element={<Dashboard />} />
+        <Route path='/create-listing' element={<CreateListing />} />
+        <Route path='/updateListing/:id' element={<UpdateListing />} />
       </Route>
       <Route path='/listing/:id' element={<ListingPage />} />
-      <Route path='/create-listing' element={<CreateListing />} />
       <Route path='/search' element={<Search />} />
     </Routes>
     <Footer />
