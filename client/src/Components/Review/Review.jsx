@@ -28,7 +28,6 @@ function Review() {
       toast.error(error.message)
     }
 
-
   }
 
   useEffect(() => {
@@ -51,14 +50,17 @@ function Review() {
         headers: {
           'content-Type': 'application/json',
         },
-        body: JSON.stringify(reviewObj),
+        body: JSON.stringify({...reviewObj,
+          user: currentUser?.data?._id
+        }),
       })
       const result = await res.json()
-
+      console.log( "user id in fetch func",currentUser?.data?._id)
       console.log(result)
       if (!result.ok) {
         return alert(result.message)
       }
+      setReviews(result)
       FetchallReview()
       toast.success("review created successfully")
 
@@ -69,29 +71,30 @@ function Review() {
   return (
     <>
     <div className="tour__reviews mt-4 border w-full p-5">
-      <h4 className='text-center text-xl font-bold text-gray-500'>Reviews ({reviews.length === null? "Not reviewed" :reviews.length})</h4>
+      <h4 className='text-center text-xl font-bold text-gray-500'>Reviews ({reviews.length === null? "Not reviewed" : reviews.length})</h4>
 
       <form onSubmit={SubmitHandler}>
         <div className="flex items-center gap-3 mb-4 rating__group">
-          <span style={{ cursor: 'pointer' }} onClick={() => setTourRating(1)}>1
+        
+          <span className='flex items-center gap-2' style={{ cursor: 'pointer' }} onClick={() => setTourRating(1)}>1
+          <i><FaStar className='hover:text-[#FFD700]'/></i>
           </span>
-          <i><FaStar /></i>
 
-          <span style={{ cursor: 'pointer' }} onClick={() => setTourRating(2)}>2
+          <span className='flex items-center gap-2' style={{ cursor: 'pointer' }} onClick={() => setTourRating(2)}>2
+          <i><FaStar className='hover:text-[#FFD700]'/></i>
           </span>
-          <i><FaStar /></i>
 
-          <span style={{ cursor: 'pointer' }} onClick={() => setTourRating(3)}>3
+          <span className='flex items-center gap-2' style={{ cursor: 'pointer' }} onClick={() => setTourRating(3)}>3
+          <i><FaStar className='hover:text-[#FFD700]'/></i>
           </span>
-          <i><FaStar /></i>
 
-          <span style={{ cursor: 'pointer' }} onClick={() => setTourRating(4)}>4
+          <span className='flex items-center gap-2' style={{ cursor: 'pointer' }} onClick={() => setTourRating(4)}>4
+          <i><FaStar className='hover:text-[#FFD700]'/></i>
           </span>
-          <i><FaStar /></i>
 
-          <span style={{ cursor: 'pointer' }} onClick={() => setTourRating(5)}>5
+          <span className='flex items-center gap-2' style={{ cursor: 'pointer' }} onClick={() => setTourRating(5)}>5
+          <i><FaStar className='hover:text-[#FFD700]'/></i>
           </span>
-          <i><FaStar /></i>
         </div>
 
         <div className="review__input flex flex-col flex-wrap gap-3 shadow-lg">

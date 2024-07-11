@@ -155,7 +155,7 @@ function ListingPage() {
                                 <button className="bg-slate-700 w-full  text-white p-3  rounded-lg uppercase hover:opacity-95" onClick={() => setShowFeedbackForm(true)}>Give Feedback</button>
                             </div>:""}
 
-                            {showFeedbackForm && <Review />}
+                            {showFeedbackForm && <Review listing={listing}/>}
 
 
                             {

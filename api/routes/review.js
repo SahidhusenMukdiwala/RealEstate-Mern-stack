@@ -4,5 +4,5 @@ import { VerifyToken } from '../Utils/verifyUser.js';
 const router = express.Router()
 
 router.post ('/reviews/:ListingId',VerifyToken,CreateReview)
-router.get('/allreviews', VerifyToken,getalReviews)
+router.get('/allreviews/', VerifyToken,getalReviews)
 export default router
