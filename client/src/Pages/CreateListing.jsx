@@ -13,6 +13,8 @@ function CreateListing() {
     const [imageerrorMessage, setImagesErrorMessage] = useState(false)
     const [loading, setLoading] = useState(false)
     const [upload, setUpload] = useState(false)
+    const agentId = currentUser?.data?._id;
+    console.log(agentId)
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -26,9 +28,14 @@ function CreateListing() {
         offers: false,
         parking: false,
         furnished: false,
+        agent:agentId,
     })
 
-    const userId = currentUser?.data?._id;
+    useEffect(() => {
+        if (agentId) {
+            setFormData({...formData, agentId: agentId})
+        }
+    }, [agentId]);
 
 
     // useEffect(() => {
@@ -123,7 +130,6 @@ function CreateListing() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("CurrenrUserId", currentUser)
         if (formData.imageUrls.length < 0) {
             return setError("You must upload two images")
         }
@@ -136,7 +142,7 @@ function CreateListing() {
                 headers: {
                     'Content-type': 'application/json',
                 },
-                body: JSON.stringify({ ...formData, userRef: userId }),
+                body: JSON.stringify({ ...formData, agent: agentId }),
             })
 
             const result = await res.json()

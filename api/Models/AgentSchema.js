@@ -41,10 +41,10 @@ const agentSchema = new mongoose.Schema({
   role: {
     type: String,
   },
-  // listings: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Listing',
-  // }],
+  listings: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Listing',
+  }],
   dateJoined: {
     type: Date,
     default: Date.now,

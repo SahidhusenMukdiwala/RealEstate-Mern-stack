@@ -49,11 +49,15 @@ const ListingSchema = new mongoose.Schema({
         type: Array,
         required: true,
     },
-    userRef: {
-        type: String,
+    agent: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Agent',
         required: true,
-        unique: true,
-    }
+      },
+    // userRef: {
+    //     type: String,
+    //     required: true,
+    // }
 }, { timestamps: true });
 
 const Listing = mongoose.model('Listing', ListingSchema);

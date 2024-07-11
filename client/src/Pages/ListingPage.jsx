@@ -12,8 +12,14 @@ import Review from '../Components/Review/Review'
 function ListingPage() {
     SwiperCore.use([Navigation])
     const { currentUser } = useSelector((state) => state.user)
+    // const propertyId = useSelector((state) => state.property)
+    // console.log("Listing id" ,propertyId)
+    // const property = useSelector(state => state.properties.find(p => p.id === propertyId));
+    // const agent = useSelector(state => state.agents.find(a => a.id === property.agentId));
     const userId = currentUser?.data?._id;
+    const userRole = currentUser?.data?.role;
     const userName = currentUser?.data?.username;
+    const [reviews, setReviews] = useState([]);
     const [listing, setListing] = useState(null)
     const [loading, setLoading] = useState(false)
     const [showFeedbackForm, setShowFeedbackForm] = useState(false)
@@ -47,6 +53,27 @@ function ListingPage() {
         fetchListing()
     }, []);
 
+    const FetchallReview = async () => {
+        try {
+          const res = await fetch('/api/review/allreviews')
+    
+          const result = await res.json()
+          if (!res.ok) {
+            toast.error(res.message)
+          }
+          setReviews(result)
+          
+        } catch (error) {
+          toast.error(error.message)
+        }
+    
+    
+      }
+    
+      useEffect(() => {
+        FetchallReview();
+      }, []);
+
     return (
         <main>
             {loading && <p className='text-center my-7 text-2xl font-bold'>Loading .....</p>}
@@ -75,7 +102,7 @@ function ListingPage() {
                         </div>
                         <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
                             <div className=" flex flex-col flex-wrap gap-2 items-center  ">
-                                <p className='my-3 font-serif text-3xl text-slate-700 text-center'>Property Listed By :- {userName}</p>
+                                <p className='my-3 font-serif text-3xl text-slate-700 text-center'>{userRole === "agent"? `Created By :- ${userName}`  : `Created By :-`}</p>
                                 {/* <Link to={'/listing/review/:id'} className='font-semibold bg-gray-600 text-white p-3 rounded-full '>Give Review</Link> */}
                             </div>
                             <p className='text-2xl font-semibold'>

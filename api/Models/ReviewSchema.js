@@ -8,7 +8,7 @@ const reviewSchema = new mongoose.Schema({
   },
   userId: {
     type: mongoose.Types.ObjectId,
-    ref: 'User',
+    ref: 'Agent',
     required: true
   },
   rating: {

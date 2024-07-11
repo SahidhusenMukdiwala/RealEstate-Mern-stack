@@ -1,12 +1,49 @@
+import Agent from "../Models/AgentSchema.js";
 import Listing from "../Models/ListingSchema.js"
 
-export const createListing = async (req, res) => {
+export const createListing = async (req, res,) => {
+    // try {
+
+    //     const listing = await Listing.create(req.body)
+    //     console.log(listing)
+    //     return res.status(201).json({ success: true, message: "Successfully Created", data: listing })
+    // } catch (error) {
+    //     res.status(500).json({ status: false, message: error.message })
+    // }
+
+
     try {
-        const listing = await Listing.create(req.body)
+        const { name, description, address, regularPrice, discountPrice, bathrooms, bedrooms, furnished, parking, offers, type, imageUrls, agentId } = req.body;
+
+        const agentExists = await Agent.exists({ _id: agentId });
+        if (!agentExists) {
+            return res.status(400).json({ error: 'Invalid agent ID' });
+        }
+
+        const listing = new Listing({
+            name,
+            description,
+            address,
+            regularPrice,
+            discountPrice,
+            bathrooms,
+            bedrooms,
+            furnished,
+            parking,
+            offers,
+            type,
+            imageUrls,
+            agent: agentId,
+        });
+        await listing.save();
+
+        await Agent.findByIdAndUpdate(agentId, { $push: { listings: listing._id } });
         console.log(listing)
-        return res.status(201).json({ success: true, message: "Successfully Created", data: listing })
+
+        res.status(201).json({ message: 'Listing created successfully', listing });
     } catch (error) {
-        res.status(500).json({ status: false, message: error.message })
+        console.error('Error creating listing:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 }
 
@@ -99,13 +136,13 @@ export const GetListings = async (req, res) => {
         const order = req.query.order || 'desc'
 
         const listings = await Listing.find({
-            name: { $regex: searchTerm,$options:'i'},
+            name: { $regex: searchTerm, $options: 'i' },
             offers,
             parking,
             type,
             furnished,
         }).sort(
-            {[sort]:order}
+            { [sort]: order }
         ).limit(limit).skip(startIndex);
 
         return res.status(200).json(listings)
