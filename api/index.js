@@ -12,8 +12,6 @@ dotenv.config()
 const app = express(); 
 const port = process.env.PORT || 8000
 
-
-
 // ============================= Routes ===================================
 app.use(express.json()); // This allow json as a input at the server side
 app.use(cookieParser())

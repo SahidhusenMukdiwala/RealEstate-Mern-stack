@@ -18,7 +18,6 @@ function ListingPage() {
     // const agent = useSelector(state => state.agents.find(a => a.id === property.agentId));
     const userId = currentUser?.data?._id;
     const userRole = currentUser?.data?.role;
-    const userName = currentUser?.data?.username;
     const [reviews, setReviews] = useState([]);
     const [listing, setListing] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -102,8 +101,8 @@ function ListingPage() {
                         </div>
                         <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
                             <div className=" flex flex-col flex-wrap gap-2 items-center  ">
-                                <p className='my-3 font-serif text-3xl text-slate-700 text-center'>{userRole === "agent"? `Created By :- ${userName}`  : `Created By :-`}</p>
-                                {/* <Link to={'/listing/review/:id'} className='font-semibold bg-gray-600 text-white p-3 rounded-full '>Give Review</Link> */}
+                                <p className='my-3 font-serif text-3xl text-slate-700 text-center'>{userRole === "agent"? `Created By :- ${listing.agent.username}`  : `Created By :- ${listing.agent.username}`}</p>
+                
                             </div>
                             <p className='text-2xl font-semibold'>
                                 {listing.name.toUpperCase()} - ${' '}
@@ -152,9 +151,9 @@ function ListingPage() {
                                 </li>
                             </ul>
 
-                            {!showFeedbackForm && <div className="text-center ">
+                            {userRole==='user'?!showFeedbackForm && <div className="text-center ">
                                 <button className="bg-slate-700 w-full  text-white p-3  rounded-lg uppercase hover:opacity-95" onClick={() => setShowFeedbackForm(true)}>Give Feedback</button>
-                            </div>}
+                            </div>:""}
 
                             {showFeedbackForm && <Review />}
 

@@ -2,15 +2,6 @@ import Agent from "../Models/AgentSchema.js";
 import Listing from "../Models/ListingSchema.js"
 
 export const createListing = async (req, res,) => {
-    // try {
-
-    //     const listing = await Listing.create(req.body)
-    //     console.log(listing)
-    //     return res.status(201).json({ success: true, message: "Successfully Created", data: listing })
-    // } catch (error) {
-    //     res.status(500).json({ status: false, message: error.message })
-    // }
-
 
     try {
         const { name, description, address, regularPrice, discountPrice, bathrooms, bedrooms, furnished, parking, offers, type, imageUrls, agentId } = req.body;
@@ -89,7 +80,7 @@ export const UpdateListing = async (req, res) => {
 
 export const GetListing = async (req, res) => {
     try {
-        const listing = await Listing.findById(req.params.id)
+        const listing = await Listing.findById(req.params.id).populate('agent','username bio')
         console.log("listing", listing)
         if (!listing) {
             res.status(404).json({ status: false, message: "Listing not found" })
