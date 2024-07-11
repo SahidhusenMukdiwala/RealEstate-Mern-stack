@@ -28,6 +28,7 @@ function Review() {
       toast.error(error.message)
     }
 
+
   }
 
   useEffect(() => {
@@ -55,7 +56,7 @@ function Review() {
         }),
       })
       const result = await res.json()
-      console.log( "user id in fetch func",currentUser?.data?._id)
+      // console.log( "user id in fetch",currentUser?.data?._id)
       console.log(result)
       if (!result.ok) {
         return alert(result.message)
@@ -99,7 +100,7 @@ function Review() {
 
         <div className="review__input flex flex-col flex-wrap gap-3 shadow-lg">
           <input className='w-full p-3' type="text" ref={reviewMsgRef} placeholder='Share Your Thoughts' required />
-          <button className='bg-gray-600 p-3 rounded-full  text-white' type='submit'>Submit</button>
+          <button  className='bg-gray-600 p-3 rounded-full  text-white' type='submit'>Submit</button>
         </div>
       </form>
 

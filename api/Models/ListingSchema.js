@@ -54,26 +54,26 @@ const ListingSchema = new mongoose.Schema({
         ref: 'Agent',
         required: true,
       },
-     ratings: [{
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    rating: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 5,
-    },
-    comment: {
-      type: String,
-      default: '',
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
-  }],
+//      ratings: [{
+//     user: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: 'User',
+//     },
+//     rating: {
+//       type: Number,
+//       required: true,
+//       min: 1,
+//       max: 5,
+//     },
+//     comment: {
+//       type: String,
+//       default: '',
+//     },
+//     date: {
+//       type: Date,
+//       default: Date.now,
+//     },
+//   }],
 }, { timestamps: true });
 
 const Listing = mongoose.model('Listing', ListingSchema);

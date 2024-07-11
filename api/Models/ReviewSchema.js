@@ -6,7 +6,7 @@ const reviewSchema = new mongoose.Schema({
     ref: 'Listing',
     required: true
   },
-  user: {
+  userId: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
     required: true

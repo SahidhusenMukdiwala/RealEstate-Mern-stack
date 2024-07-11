@@ -25,10 +25,11 @@ const userSchema = new mongoose.Schema({
         default: "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_0.jpg",
     },
     reviews: [{
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Types.ObjectId,
             ref: 'Review'
-        }
+        },
     ],
+    
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
