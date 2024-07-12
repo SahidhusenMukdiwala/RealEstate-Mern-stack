@@ -41,7 +41,12 @@ function SignIn() {
 
       dispatch(signInSuccess(data))
       toast.success("Sign In Successfully")
-      navigate('/')
+      if(role === 'agent') {
+        navigate('/agents/profile/me')
+      }
+      else{
+        navigate('/')
+      }
     } catch (error) {
       toast.error(error.message)
       dispatch(signInFailure(error.message))
