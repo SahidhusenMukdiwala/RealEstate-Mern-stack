@@ -1,0 +1,34 @@
+.sticky__header{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    position: sticky;
+    left: 0;
+    top: 0;
+    box-shadow: 3px 3px 8px -3px #ddd;
+    z-index: 999;
+}
+
+    .show__menu{
+        display: block;
+
+    }
+
+.show__menu ul{
+    display: block;
+    position: absolute;
+    top: 72px;
+    line-height: 50px;
+    background: white;
+    padding: 15px;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    left: 0px;
+    background-color: gray;
+    transition: all 0.5s ease-in-out;
+}
+.show__menu ul li a{
+    display: block;
+    color: white ;
+}
