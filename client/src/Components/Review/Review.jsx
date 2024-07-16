@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 function Review() {
   const { currentUser } = useSelector((state) => state.user)
+  const user = currentUser?.data?.username;
   console.log(currentUser)
   const [tourRating, setTourRating] = useState(null)
   const [reviews, setReviews] = useState([]);
@@ -116,6 +117,9 @@ function Review() {
                   <p>{new Date(review.createdAt).toLocaleDateString('en-us', Option)}
                   </p>
                 </div>
+                <h3>
+                  {user}
+                </h3>
                 <span className="">{review.rating}<i className="ri-star-s-fill"></i>
                 </span>
               </div>

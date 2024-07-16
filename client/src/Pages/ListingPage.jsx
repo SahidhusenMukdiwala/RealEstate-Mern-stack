@@ -17,6 +17,7 @@ function ListingPage() {
     // const property = useSelector(state => state.properties.find(p => p.id === propertyId));
     // const agent = useSelector(state => state.agents.find(a => a.id === property.agentId));
     const userId = currentUser?.data?._id;
+   
     const userRole = currentUser?.data?.role;
     const [reviews, setReviews] = useState([]);
     const [listing, setListing] = useState(null)
@@ -163,7 +164,7 @@ function ListingPage() {
                             </div> : ""}
 
 
-                            {showFeedbackForm && <Review listing={listing} />}
+                            {showFeedbackForm && <Review  listing={listing} />}
 
 
                             {/* {userRole === 'user' ? } */}
