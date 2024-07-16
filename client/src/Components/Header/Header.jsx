@@ -50,15 +50,15 @@ export default function Header() {
   },)
 
   const menuRef = useRef(null)
-  const toggleMenu = () =>{
+  const toggleMenu = () => {
     menuRef.current.classList.toggle('show__menu')
-   if(isOpen){
-    setIsOpen(false)
-   }
-   else{
-    setIsOpen(true)
-   }
+    if (isOpen) {
+      setIsOpen(false)
     }
+    else {
+      setIsOpen(true)
+    }
+  }
 
   const navLinks = [
     {
@@ -104,21 +104,23 @@ export default function Header() {
               }
             </ul>
 
-
           </div>
-          
-          <div className="flex items-center gap-3">
-            <span className='sm:hidden' onClick={toggleMenu}>
-              {isOpen ?  <BiMenuAltLeft className='w-7 h-7 cursor-pointer' /> : <FaXmark  className='w-7 h-7 cursor-pointer'/> }
-             
-            </span>
 
+          <div className="flex items-center gap-3">
+            {
+              currentUser ? (
+                <span className='sm:hidden' onClick={toggleMenu}>
+                  {isOpen ? <BiMenuAltLeft className='w-7 h-7 cursor-pointer' /> : <FaXmark className='w-7 h-7 cursor-pointer' />}
+
+                </span>
+              ) : ""
+            }
 
             <Link to={`${userRole === 'agent' ? '/agents/profile/me' : '/users/profile/me'}`}>{
               currentUser ? (
                 <img className='rounded-full w-7 h-7 object-cover' src={currentUser?.data?.avatar} alt="" />
               ) : (
-                <li className=' text-slate-700 hover:underline'> Sign in</li>
+                <li className='list-none text-slate-700 hover:underline'> Sign in</li>
               )
             }
             </Link>
