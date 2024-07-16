@@ -10,7 +10,7 @@ export const CreateReview = async (req, res,) => {
     const newReview = new Review({
         ...req.body,
         userId: userId,
-        ListingId: ListingId
+        ListingId: ListingId,
     });
     try {
         const savedReview = await newReview.save()

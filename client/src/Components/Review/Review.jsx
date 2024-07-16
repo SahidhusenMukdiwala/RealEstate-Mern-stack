@@ -9,6 +9,7 @@ function Review() {
   console.log(currentUser)
   const [tourRating, setTourRating] = useState(null)
   const [reviews, setReviews] = useState([]);
+  const [username, setUsername] = useState('');
   console.log("reviews", reviews)
   const params = useParams()
   const reviewMsgRef = useRef('')
@@ -44,6 +45,7 @@ function Review() {
         alert("please Sign in")
       }
       const reviewObj = {
+        username,
         comment,
         rating: tourRating
       }
@@ -53,11 +55,10 @@ function Review() {
           'content-Type': 'application/json',
         },
         body: JSON.stringify({...reviewObj,
-          user: currentUser?.data?._id
+          user: currentUser?.data?._id,
         }),
       })
       const result = await res.json()
-      // console.log( "user id in fetch",currentUser?.data?._id)
       console.log(result)
       if (!result.ok) {
         return alert(result.message)
@@ -79,7 +80,7 @@ function Review() {
         <div className="flex items-center gap-3 mb-4 rating__group">
         
           <span className='flex items-center gap-2' style={{ cursor: 'pointer' }} onClick={() => setTourRating(1)}>1
-          <i><FaStar className='hover:text-[#FFD700]'/></i>
+          <i><FaStar className='hover:text-[#9c8f47]'/></i>
           </span>
 
           <span className='flex items-center gap-2' style={{ cursor: 'pointer' }} onClick={() => setTourRating(2)}>2
@@ -100,6 +101,7 @@ function Review() {
         </div>
 
         <div className="review__input flex flex-col flex-wrap gap-3 shadow-lg">
+          <input className='w-full p-3' type="text"  value={username} onChange={(e) => setUsername(e.target.value)}  placeholder='Enter Name' required />
           <input className='w-full p-3' type="text" ref={reviewMsgRef} placeholder='Share Your Thoughts' required />
           <button  className='bg-gray-600 p-3 rounded-full  text-white' type='submit'>Submit</button>
         </div>
@@ -118,7 +120,7 @@ function Review() {
                   </p>
                 </div>
                 <h3>
-                  {user}
+                  {review.username}
                 </h3>
                 <span className="">{review.rating}<i className="ri-star-s-fill"></i>
                 </span>

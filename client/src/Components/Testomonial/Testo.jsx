@@ -1,13 +1,30 @@
-import React from 'react'
-import ava01 from '../../assets/image/ava-1.jpg';
-import ava02 from '../../assets/image/ava-2.jpg';
-import ava03 from '../../assets/image/ava-3.jpg';
-
-
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { FaStar } from 'react-icons/fa';
 function Testo() {
+    const [reviews, setReviews] = useState([]);
+    const { currentUser } = useSelector((state) => state.user)
+    const FetchallReview = async () => {
+        try {
+            const res = await fetch('/api/review/allreviews')
 
+            const result = await res.json()
+            if (!res.ok) {
+                toast.error(res.message)
+            }
+            setReviews(result)
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    useEffect(() => {
+        FetchallReview();
+    }, []);
+    
     return (
-
         <>
             <div className="flex justify-center items-center mt-7 hover:cursor-pointer">
                 <div className="">
@@ -17,40 +34,28 @@ function Testo() {
                         <p className='text-[#041533] font-semibold'>Hear from our satisfied buyers, tenants, owners and dealers</p>
                     </div>
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className="testomonial py-4 px-3 border shadow-sm hover:shadow-lg">
+                        <div className="flex flex-wrap gap-5 testomonial py-3 px-3 ">
+                     
+                            {reviews?.map(review => (
+                                    <div key={review._id} className="hover:scale-105  hover:bg-gray-600 hover:text-white shadow-lg hover:shadow-xl duration-[0.5s] mt-3">
+                                        {/* <img src={userAva} className='w-h-16  h-16  rounded-full' alt="" /> */}
+                              
+                                                    <div className="leading-[30px] border p-3" >
+                                                        <div className="flex gap-2 items-center justify-between text-lg">
+                                                            <h6 className="mb-0 font-bold">{review.username}</h6>
+                                                            <div className="flex items-center gap-3">
+                                                                <FaStar className='text-[#e4d685]' />
+                                                                <p className='float-right'> {review.rating}</p>
+                                                            </div>
+                                                        </div>
+                                                        <p className='uppercase font-mono'>{review.comment}</p>
+                                                        <p className='font-semibold'>Customer</p>
+                                                    </div>
+                                                </div>
+                                )
 
-                            <div className="flex items-center gap-4 mt-3">
-                                <img src={ava01} className='w-h-16  h-16  rounded-2' alt="" />
-                                <div className="">
-                                    <h6 className="mb-0 mt-3">John Doe</h6>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing <br /> elit. Recusandae, quis.</p>
-                                    <p className='font-bold'>Customer</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testomonial py-4 px-3 border shadow-sm hover:shadow-lg">
-
-                            <div className="flex items-center gap-4 mt-3">
-                                <img src={ava02} className='w-h-16  h-16  rounded-2' alt="" />
-                                <div className="">
-                                    <h6 className="mb-0 mt-3">Lia franklen</h6>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing <br /> elit. Recusandae, quis.</p>
-                                    <p className='font-bold'>Customer</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testomonial py-4 px-3 border shadow-sm hover:shadow-lg">
-
-                            <div className="flex items-center gap-4 mt-3">
-                                <img src={ava03} className='w-h-16  h-16  rounded-2' alt="" />
-                                <div className="">
-                                    <h6 className="mb-0 mt-3">cath peterson</h6>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing <br /> elit. Recusandae, quis.</p>
-                                    <p className='font-bold'>Customer</p>
-                                </div>
-                            </div>
+                                )}
+                           
                         </div>
 
                     </div>
