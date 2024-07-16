@@ -26,6 +26,8 @@ function ListingPage() {
     const [copied, setCopied] = useState(false)
     const [contect, setContect] = useState(false)
     const params = useParams()
+
+    
     console.log(params.id)
     useEffect(() => {
         const fetchListing = async () => {
@@ -52,26 +54,31 @@ function ListingPage() {
         fetchListing()
     }, []);
 
+
+    const address = listing?.address.replace(/\s/g, '+');
+  const googleMapSrc = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFHAuwX5QSu_uDuh-dtUI-YzsKmtBCLqQ&q=${address}`;
+  console.log("googleMapSrc",googleMapSrc)
+
     const FetchallReview = async () => {
         try {
-          const res = await fetch('/api/review/allreviews')
-    
-          const result = await res.json()
-          if (!res.ok) {
-            toast.error(res.message)
-          }
-          setReviews(result)
-          
+            const res = await fetch('/api/review/allreviews')
+
+            const result = await res.json()
+            if (!res.ok) {
+                toast.error(res.message)
+            }
+            setReviews(result)
+
         } catch (error) {
-          toast.error(error.message)
+            toast.error(error.message)
         }
-    
-    
-      }
-    
-      useEffect(() => {
+
+
+    }
+
+    useEffect(() => {
         FetchallReview();
-      }, []);
+    }, []);
 
     return (
         <main>
@@ -101,8 +108,8 @@ function ListingPage() {
                         </div>
                         <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
                             <div className=" flex flex-col flex-wrap gap-2 items-center  ">
-                                <p className='my-3 font-serif text-3xl text-slate-700 text-center'>{userRole === "agent"? `Created By :- ${listing.agent.username}`  : `Created By :- ${listing.agent.username}`}</p>
-                
+                                <p className='my-3 font-serif text-3xl text-slate-700 text-center'>{userRole === "agent" ? `Created By :- ${listing.agent.username}` : `Created By :- ${listing.agent.username}`}</p>
+
                             </div>
                             <p className='text-2xl font-semibold'>
                                 {listing.name.toUpperCase()} - ${' '}
@@ -151,12 +158,12 @@ function ListingPage() {
                                 </li>
                             </ul>
 
-                            {userRole==='user'?!showFeedbackForm && <div className="text-center ">
+                            {userRole === 'user' ? !showFeedbackForm && <div className="text-center ">
                                 <button className="bg-slate-700 w-full  text-white p-3  rounded-lg uppercase hover:opacity-95" onClick={() => setShowFeedbackForm(true)}>Give Feedback</button>
-                            </div>:""}
+                            </div> : ""}
 
 
-                            {showFeedbackForm && <Review listing={listing}/>}
+                            {showFeedbackForm && <Review listing={listing} />}
 
 
                             {/* {userRole === 'user' ? } */}
@@ -168,6 +175,10 @@ function ListingPage() {
 
                             {contect && <Contect listing={listing} />}
 
+                        </div>
+
+                        <div className="Maps">
+                            <iframe className='border-0 h-full w-full left-0 top-0 sm:w-full sm:pb-2' src={googleMapSrc} height="500"  allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </>
                 )
