@@ -10,14 +10,13 @@ export const signup = async (req, res, next) => {
         console.log(role)
     try {
         let user = null
-        // checking user is doctor or patient : - 
+        
         if (role === 'user') {
             user = await User.findOne({ email })
         }
         else if (role === 'agent') {
             user = await Agent.findOne({ email })
         }
-        // checking user exist
         if (user) {
              return res.status(400).json({ message: 'User already exists' })
         }
@@ -51,22 +50,10 @@ export const signup = async (req, res, next) => {
         console.log(error)
     }
 
-    // try {
-    //     const newUser = new User({ username, email, password: hashPass })
-    //     await newUser.save()
-
-
-    //     res.status(200).json({ success: true, message: 'User Created successfully', data: newUser })
-    // }
-    // catch (error) {
-    //     res.status(500).json({ success: false, message: 'Invalid Credentials !!! Please Check' })
-
-    // }
 }
 
 export const signin = async (req, res) => {
-    // const email = req.body.email
-    // console.log(email)
+    
     const { email, password,licenseNumber } = req.body
     try {
             let user = null;
@@ -82,7 +69,6 @@ export const signin = async (req, res) => {
             if (!user) {
                 return res.status(404).send({ message: 'User Not Found' })
             }
-        // error handling done
         const checkCorrectPass = bcrypt.compareSync(req.body.password, user.password)
         
         console.log("checkCorrectPass", checkCorrectPass)
