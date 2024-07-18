@@ -14,6 +14,7 @@ function Dashboard() {
     const userId = currentUser?.data?._id;
     const userRole = currentUser?.data?.role;
     const userDesc = currentUser?.data?.bio;
+    const useragency = currentUser?.data?.agency;
     const [file, setFile] = useState(undefined)
     const [filePercentage, setFilePercentage] = useState(0)
     const [fileUploaderror, setFileError] = useState(false)
@@ -24,11 +25,7 @@ function Dashboard() {
     console.log("Percentage done :- ", filePercentage)
     console.log(fileUploaderror)
     const userName = currentUser?.data?.username;
-    // firebasse storage
-    // allow read;
-    // allow write: if
-    // request.resource.size < 2 * 1024 * 1024 && 
-    // request.resource.contentType.matches('images/.*')
+
     console.log("userId", userId)
     useEffect(() => {
         if (file) {
@@ -195,6 +192,7 @@ function Dashboard() {
 
                 <h1 className='text-center font-serif text-2xl uppercase'>{userName} ({userRole})</h1>
                 <h1 className='text-center font-serif text-sm text-gray-600 uppercase'>{userDesc}</h1>
+                <h1 className='text-center font-semibold text-sm text-black uppercase'>Agency :- {useragency}</h1>
 
                 <input defaultValue={currentUser?.data?.username} type="text" placeholder='Username' className='border p-3 rounded-lg focus:outline-none' id='username' onChange={hadnleChange} />
                 <input disabled defaultValue={currentUser?.data?.email} type="email" placeholder='Email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={hadnleChange} />

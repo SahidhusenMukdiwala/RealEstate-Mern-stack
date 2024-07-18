@@ -12,12 +12,7 @@ import Review from '../Components/Review/Review'
 function ListingPage() {
     SwiperCore.use([Navigation])
     const { currentUser } = useSelector((state) => state.user)
-    // const propertyId = useSelector((state) => state.property)
-    // console.log("Listing id" ,propertyId)
-    // const property = useSelector(state => state.properties.find(p => p.id === propertyId));
-    // const agent = useSelector(state => state.agents.find(a => a.id === property.agentId));
     const userId = currentUser?.data?._id;
-   
     const userRole = currentUser?.data?.role;
     const [reviews, setReviews] = useState([]);
     const [listing, setListing] = useState(null)
