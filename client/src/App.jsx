@@ -15,6 +15,7 @@ import Search from './Pages/Search'
 import Dashboard from './Pages/Dashboard'
 import Review from './Components/Review/Review'
 import ContectUs from './Components/ContectUs/ContectUs'
+import Successful from './Components/SuccessfulPage/Successful'
 export default function App() {
   return <BrowserRouter>
     <Header />
@@ -38,6 +39,7 @@ export default function App() {
       <Route path='/listing/:id' element={<ListingPage />} />
       <Route path='/search' element={<Search />} />
       <Route path='/ContectUs' element={<ContectUs/>}/>
+      <Route path='/contectus/Submit/Sucessful' element={<Successful/>}/>
     </Routes>
     <Footer />
   </BrowserRouter>

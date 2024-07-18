@@ -35,8 +35,8 @@ function ContectUs() {
                 return;
             }
 
-            toast.success("Submitted successfully");
-                navigate('/Submit/Sucessful');            
+            // toast.success("Submitted successfully");
+                navigate('/contectus/Submit/Sucessful');            
 
         } catch (error) {
             setLoading(false);
