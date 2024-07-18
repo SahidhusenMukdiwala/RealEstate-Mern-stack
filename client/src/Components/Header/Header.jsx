@@ -69,6 +69,10 @@ export default function Header() {
       path: '/about',
       display: 'About'
     },
+    {
+      path: '/ContectUs',
+      display: 'ContectUs'
+    },
 
   ]
 
@@ -92,7 +96,7 @@ export default function Header() {
         }
 
         <div className="navigation flex items-center sm:gap-4">
-          <div className="navigation duration-1000" ref={menuRef} onClick={toggleMenu}>
+          <div className="navigation duration-1000" ref={menuRef}>
             <ul className='flex items-center sm:gap-4' >
               {/* <Link to='/'><li id='home' className='hidden sm:inline text-slate-700 hover:underline' >Home</li></Link>
               <Link to='/about'> <li id='about' className='hidden sm:inline text-slate-700 hover:underline' >About</li></Link> */}

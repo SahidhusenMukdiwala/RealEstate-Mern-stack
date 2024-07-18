@@ -9,12 +9,12 @@
     z-index: 999;
 }
 
-    .show__menu{
+.show__menu{
         display: block;
 
     }
 
-.show__menu ul{
+    .show__menu ul{
     display: block;
     position: absolute;
     top: 72px;
