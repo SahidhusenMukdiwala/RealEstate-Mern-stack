@@ -92,14 +92,14 @@ export const GetListing = async (req, res) => {
 }
 
 
-// Most important portion bcoz in this we sort all the things .
+// Most important portion bcoz in this we sort all the things and add limits.
 
 export const GetListings = async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 9;
         const startIndex = parseInt(req.query.startIndex) || 0;
-        let offers = req.query.offers;
 
+        let offers = req.query.offers;
         if (offers === undefined || offers === "false") {
             //  if user not select offer then we should see both with or without offer properties
             offers = { $in: [false, true] }
