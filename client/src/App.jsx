@@ -14,6 +14,7 @@ import ListingPage from './Pages/ListingPage'
 import Search from './Pages/Search'
 import Dashboard from './Pages/Dashboard'
 import Review from './Components/Review/Review'
+import ContectUs from './Components/ContectUs/ContectUs'
 export default function App() {
   return <BrowserRouter>
     <Header />
@@ -36,6 +37,7 @@ export default function App() {
       </Route>
       <Route path='/listing/:id' element={<ListingPage />} />
       <Route path='/search' element={<Search />} />
+      <Route path='/ContectUs' element={<ContectUs/>}/>
     </Routes>
     <Footer />
   </BrowserRouter>
