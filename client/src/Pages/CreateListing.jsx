@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 
 function CreateListing() {
-//
 
     const  {currentUser}  = useSelector(state => state.user)
     const [files, setFile] = useState([])
