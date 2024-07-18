@@ -109,7 +109,7 @@ function Review() {
 
       <div className='user__reviews'>
         {
-           reviews?.map(review => (
+           reviews.map(review => (
           <div key={review._id} className="review__item flex flex-col gap-4 ">
             <img src='' alt="" />
 

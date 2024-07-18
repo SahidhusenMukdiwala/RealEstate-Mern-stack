@@ -29,7 +29,7 @@ export const getAgentById = async (req, res) => {
       const { password: pass, ...rest } = agent._doc
       res.send(rest);
     } catch (error) {
-      res.status(500).send({ message:"helo"+ error.message });
+      // res.status(500).send({ message:"helo"+ error.message });
     }
   };
   

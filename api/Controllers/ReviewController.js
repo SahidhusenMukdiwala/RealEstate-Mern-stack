@@ -29,15 +29,13 @@ export const CreateReview = async (req, res,) => {
     }
 }
 
-
-
-
 export const getalReviews = async (req, res) => {
     const { listingId } = req.params;
     try {
         const reviews = await Review.find({listing: listingId});
+        // const reviews = await Review.find();
         res.status(200).json(reviews);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        // res.status(500).json({ message: error.message });
     }
 };
