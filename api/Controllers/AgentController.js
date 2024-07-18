@@ -21,14 +21,15 @@ export const getAllAgents = async (req, res) => {
   
   // Get an agent by ID
 export const getAgentById = async (req, res) => {
+  const agent = await Agent.findById(req.params.id);
     try {
-      const agent = await Agent.findById(req.params.id);
       if (!agent) {
         return res.status(404).send({ message: 'Agent not found' });
       }
-      res.send(agent);
+      const { password: pass, ...rest } = agent._doc
+      res.send(rest);
     } catch (error) {
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ message:"helo"+ error.message });
     }
   };
   

@@ -27,7 +27,7 @@ function ListingPage() {
     const [copied, setCopied] = useState(false)
     const [contect, setContect] = useState(false)
     const params = useParams()
-
+console.log("listing",listing)
     
     console.log(params.id)
     useEffect(() => {
@@ -166,16 +166,16 @@ function ListingPage() {
 
                             {showFeedbackForm && <Review  listing={listing} />}
 
-
-                            {/* {userRole === 'user' ? } */}
-                            {
-                                currentUser && listing.userRef !== userId && !contect && (
-                                    <button onClick={() => setContect(true)} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>Contect Landlord</button>
-                                )
-                            }
+                                    {userRole === 'user' ?  (
+                                        <button onClick={() => setContect(true)} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>Contect Landlord</button>
+                                    ) 
+                                    :
+                                    " "
+                                }
+                                
+                         
 
                             {contect && <Contect listing={listing} />}
-
                         </div>
 
                         <div className="Maps">

@@ -7,13 +7,17 @@ function Contect({ listing }) {
     const [message, setMessage] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    console.log(listing.userRef)
+    console.log('landlord',landlord)
+    console.log(`/api/agent/agents/${listing.userRef}`)
     useEffect(() => {
         const FetchLandLord = async () => {
             try {
                 setLoading(true)
-                const res = await fetch(`/api/user/${listing.userRef}`)
-
+                const res = await fetch(`/api/agent/agents/${listing.userRef}`)
+                console.log(res)
                 const result = await res.json()
+                console.log("result", result)
                 if (!res.ok) {
                     setError(false)
                     toast.error(res.message)

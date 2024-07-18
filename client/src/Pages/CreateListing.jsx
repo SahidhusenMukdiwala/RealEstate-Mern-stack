@@ -142,7 +142,7 @@ function CreateListing() {
                 headers: {
                     'Content-type': 'application/json',
                 },
-                body: JSON.stringify({ ...formData, agent: agentId }),
+                body: JSON.stringify({ ...formData, agent: agentId ,userRef:currentUser?.data?._id}),
             })
 
             const result = await res.json()

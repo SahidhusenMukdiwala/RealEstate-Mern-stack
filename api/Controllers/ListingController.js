@@ -4,7 +4,7 @@ import Listing from "../Models/ListingSchema.js"
 export const createListing = async (req, res,) => {
 
     try {
-        const { name, description, address, regularPrice, discountPrice, bathrooms, bedrooms, furnished, parking, offers, type, imageUrls, agentId } = req.body;
+        const { name, description, address, regularPrice, discountPrice, bathrooms, bedrooms, furnished, parking, offers, type, imageUrls, agentId,userRef } = req.body;
 
         const agentExists = await Agent.exists({ _id: agentId });
         if (!agentExists) {
@@ -24,6 +24,7 @@ export const createListing = async (req, res,) => {
             offers,
             type,
             imageUrls,
+            userRef,
             agent: agentId,
         });
         await listing.save();
@@ -75,7 +76,6 @@ export const UpdateListing = async (req, res) => {
     } catch (error) {
         res.status(500).json(error.message)
     }
-
 }
 
 export const GetListing = async (req, res) => {

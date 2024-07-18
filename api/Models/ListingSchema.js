@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 const ListingSchema = new mongoose.Schema({
 
     name: {
@@ -47,6 +48,9 @@ const ListingSchema = new mongoose.Schema({
     },
     imageUrls: {
         type: Array,
+        required: true,
+    },userRef:{
+        type:String,
         required: true,
     },
     agent: {
