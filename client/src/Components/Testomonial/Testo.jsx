@@ -23,7 +23,7 @@ function Testo() {
     useEffect(() => {
         FetchallReview();
     }, []);
-    
+
     return (
         <>
             <div className="flex justify-center items-center mt-7 hover:cursor-pointer">
@@ -35,30 +35,31 @@ function Testo() {
                     </div>
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex flex-wrap gap-5 testomonial py-3 px-3 ">
-                     
-                            {reviews?.map(review => (
-                                    <div key={review._id} className="hover:scale-105  hover:bg-gray-600 hover:text-white shadow-lg hover:shadow-xl duration-[0.5s] mt-3">
-                                        {/* <img src={userAva} className='w-h-16  h-16  rounded-full' alt="" /> */}
-                              
-                                                    <div className="leading-[30px] border p-3" >
-                                                        <div className="flex gap-2 items-center justify-between text-lg">
-                                                            <h6 className="mb-0 font-bold">{review.username}</h6>
-                                                            <div className="flex items-center gap-3">
-                                                                <FaStar className='text-[#e4d685]' />
-                                                                <p className='float-right'> {review.rating}</p>
-                                                            </div>
-                                                        </div>
-                                                        <p className='uppercase font-mono'>{review.comment}</p>
-                                                        <p className='font-semibold'>Customer</p>
-                                                    </div>
-                                                </div>
-                                )
 
-                                )}
-                           
+                            {reviews?.map(review => (
+                                <div key={review._id} className="hover:scale-105  hover:bg-gray-600 hover:text-white shadow-lg hover:shadow-xl duration-[0.5s] mt-3">
+                                    {/* <img src={userAva} clxassName='w-h-16  h-16  rounded-full' alt="" /> */}
+
+                                    <div className="leading-[30px] border p-3" >
+                                        <div className="flex gap-2 items-center justify-between text-lg">
+                                            <h6 className="mb-0 font-bold">{review.username}</h6>
+                                            <div className="flex items-center gap-3">
+                                                <FaStar className='text-[#e4d685]' />
+                                                <p className='float-right'> {review.rating}</p>
+                                            </div>
+                                        </div>
+                                        <p className='uppercase font-mono'>{review.comment}</p>
+                                        <p className='font-semibold'>Customer</p>
+                                    </div>
+                                </div>
+                            )
+
+                            )}
+
                         </div>
 
                     </div>
+
 
                 </div>
             </div>
