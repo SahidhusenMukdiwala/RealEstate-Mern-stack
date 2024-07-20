@@ -7,6 +7,7 @@ import 'swiper/css/bundle'
 import ListingCard from '../Components/Card/ListingCard.jsx'
 import { FaBuildingShield,FaHouseCircleCheck, FaUser } from "react-icons/fa6";
 import Testo from '../Components/Testomonial/Testo.jsx'
+import Services from './Services.jsx'
 export default function Home() {
   const [offerListing, setofferListing] = useState([])
   const [saleListing, setsaleListing] = useState([])
@@ -122,6 +123,7 @@ export default function Home() {
         }
       </div>
 
+      <Services/>
 
       <div className="Benefits__benefitSteps">
         <div className="">
