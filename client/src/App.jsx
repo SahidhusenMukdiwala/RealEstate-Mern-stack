@@ -31,6 +31,7 @@ export default function App() {
 
       <Route element={<PrivateRoute allowedRoles={['user']} />} >
         <Route path='/users/profile/me' element={<Profile />} />
+
       </Route>
       <Route element={<PrivateRoute allowedRoles={['agent']} />} >
         <Route path='/agents/profile/me' element={<Dashboard />} />
@@ -39,9 +40,11 @@ export default function App() {
       </Route>
       <Route path='/listing/:id' element={<ListingPage />} />
       <Route path='/search' element={<Search />} />
-      <Route path='/ContectUs' element={<ContectUs/>}/>
-      <Route path='/Articals' element={<Articals/>}/>
-      <Route path='/contectus/Submit/Sucessful' element={<Successful/>}/>
+      <Route element={<PrivateRoute allowedRoles={['user', 'agent']} />} >
+        <Route path='/ContectUs' element={<ContectUs />} />
+        <Route path='/Articals' element={<Articals />} />
+      </Route>
+      <Route path='/contectus/Submit/Sucessful' element={<Successful />} />
     </Routes>
     <Footer />
   </BrowserRouter>
