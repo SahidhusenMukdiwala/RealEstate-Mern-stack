@@ -73,6 +73,10 @@ export default function Header() {
       path: '/ContectUs',
       display: 'ContectUs'
     },
+    {
+      path: '/Articals',
+      display: 'Articals'
+    },
 
   ]
 
