@@ -80,7 +80,7 @@ export const UpdateListing = async (req, res) => {
 
 export const GetListing = async (req, res) => {
     try {
-        const listing = await Listing.findById(req.params.id).populate('agent','username bio')
+        const listing = await Listing.findById(req.params.id).populate('agent','username bio').populate('reviews', 'rating comment username')
         console.log("listing", listing)
         if (!listing) {
             res.status(404).json({ status: false, message: "Listing not found" })
