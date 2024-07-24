@@ -30,6 +30,3 @@ export const VerifyToken = async(req, res, next) => {
 
 }
 
-// export const VerifyUser = async(req, res, next) => {
-
-// }
