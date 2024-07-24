@@ -24,7 +24,7 @@ function Review() {
       if (!res.ok) {
         toast.error(res.message)
       }
-      setReviews(result)
+      setReviews(result.data || [])
       
     } catch (error) {
       toast.error(error.message)

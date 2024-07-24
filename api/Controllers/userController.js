@@ -71,7 +71,6 @@ export const getUser = async (req, res) => {
     } catch (error) {
         res.json({ success: false, message: 'Something went wrong' })
     }
-
 }
 
 export const getMyBooking = async (req, res) => {
@@ -84,9 +83,8 @@ export const getMyBooking = async (req, res) => {
         // console.log(listingIds);
 
         const listings = await Listing.find({ _id: { $in: listingIds } });
-        res.status(200).json({ success: true, message: 'Appointments retrieved successfully', data: listings });
+        res.status(200).json({ success: true, message: 'Appointments retrieved successfully', listings });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Something went Wrong, Can not get Appointment' })
     }
-
 }

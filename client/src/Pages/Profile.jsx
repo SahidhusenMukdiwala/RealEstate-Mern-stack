@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { DeleteUserFailure, DeleteUserStart, DeleteUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess, signOutUserStart, signOutUserSuccess, signOutUserFailure } from '../redux/userSlice'
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import ListingCard from '../Components/Card/ListingCard'
 function Profile() {
   const fileRef = useRef(null)
   const { currentUser } = useSelector((state) => state.user)
@@ -142,17 +143,48 @@ function Profile() {
   }
 
 
+  const [bookings, setBooking] = useState([])
+  console.log("booking Data", bookings)
+
+  const address = bookings?.data?.address
+  console.log("description", address)
+
+  const getallBookings = async () => {
+
+    try {
+      const res = await fetch('/api/user/appointments/my-appointments')
+
+      const result = await res.json();
+      console.log("result", result)
+
+      if (!res.ok) {
+        return toast.error(res.message);
+      }
+      console.log("Set Booking", setBooking(result))
+      setBooking(result.listings)
+
+    } catch (error) {
+      toast.error(error.message)
+    }
+
+
+  }
+
+  useEffect(() => {
+    getallBookings();
+  }, []);
+
 
   return (
-    <div className='p-3 max-w-lg mx-auto '>
+    <div className=''>
       <div className="p-3 max-w-lg mx-auto flex items-center justify-center ">
-      <button onClick={() => setTab('profile')} className={`${tab === 'profile' && 'bg-blue-700 text-white font-medium'} p-4 mr-5 px-5 rounded-md text-headingColor font-semibold leading-7 text-[17px] border border-solid border-primaryColor`}>Profile</button>
-      <button onClick={() => setTab('bookings')} className={`${tab === 'bookings' && 'bg-blue-700 text-white font-medium'} p-4 mr-5 px-5 rounded-md text-headingColor font-semibold leading-7 text-[17px] border border-solid border-primaryColor`}>Booking</button>
+        <button onClick={() => setTab('profile')} className={`${tab === 'profile' && 'bg-blue-700 text-white font-medium'} p-4 mr-5 px-5 rounded-md text-headingColor font-semibold leading-7 text-[17px] border border-solid border-primaryColor`}>Profile</button>
+        <button onClick={() => setTab('bookings')} className={`${tab === 'bookings' && 'bg-blue-700 text-white font-medium'} p-4 mr-5 px-5 rounded-md text-headingColor font-semibold leading-7 text-[17px] border border-solid border-primaryColor`}>Booking</button>
       </div>
 
       {
         tab === 'profile' && (
-          <div className=''>
+          <div className='max-w-lg p-3 mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
 
             <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
@@ -197,6 +229,24 @@ function Profile() {
           </div>
         )
       }
+
+      {tab === 'bookings' && (
+        <div>
+          <h1 className='text-center font-serif text-2xl'>My Bookings</h1>
+          
+            <div className="flex flex-wrap items-center justify-center gap-4 mt-5">
+              {bookings.map((booking) => (
+                <ListingCard listings={booking} />
+              ))
+              }
+            </div>
+          </div>
+      
+      )
+
+
+      }
+
 
     </div>
 
