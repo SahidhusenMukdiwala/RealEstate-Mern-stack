@@ -8,6 +8,7 @@ import listingRouter from '../api/routes/listing.js'
 import agentRouter from '../api/routes/Agent.js'
 import reviewRouter from '../api/routes/review.js'
 import contectRouter from '../api/routes/Contect.js'
+import bookingRouter from '../api/routes/Booking.js'
 
 dotenv.config()
 const app = express(); 
@@ -22,6 +23,7 @@ app.use('/api/agent',agentRouter)
 app.use('/api/listing',listingRouter)
 app.use('/api/review',reviewRouter)
 app.use('/api/contect',contectRouter)
+app.use('/api/bookings',bookingRouter)
 
 // ============================= Database Connection =============================
 const connect = async()=>{

@@ -22,8 +22,8 @@ function ListingPage() {
     const [copied, setCopied] = useState(false)
     const [contect, setContect] = useState(false)
     const params = useParams()
-console.log("listing",listing)
-    
+    console.log("listing", listing)
+
     console.log(params.id)
     useEffect(() => {
         const fetchListing = async () => {
@@ -52,8 +52,8 @@ console.log("listing",listing)
 
 
     const address = listing?.address.replace(/\s/g, '+');
-  const googleMapSrc = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFHAuwX5QSu_uDuh-dtUI-YzsKmtBCLqQ&q=${address}`;
-  console.log("googleMapSrc",googleMapSrc)
+    const googleMapSrc = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFHAuwX5QSu_uDuh-dtUI-YzsKmtBCLqQ&q=${address}`;
+    console.log("googleMapSrc", googleMapSrc)
 
     const FetchallReview = async () => {
         try {
@@ -75,6 +75,32 @@ console.log("listing",listing)
     useEffect(() => {
         FetchallReview();
     }, []);
+
+
+    const HandleBooking = async () => {
+        try {
+            const res = await fetch(`/api/bookings/checkout-success/${params.id}`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+            })
+            console.log(res)
+            const data = await res.json()
+            console.log(data)
+
+            if (!res.ok) {
+                throw new Error(data.message + "Please try again")
+            }
+
+            if (data.session.url) {
+                window.location.href = data.session.url;
+            }
+            console.log(data.session.url)
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     return (
         <main>
@@ -159,22 +185,23 @@ console.log("listing",listing)
                             </div> : ""}
 
 
-                            {showFeedbackForm && <Review  listing={listing} />}
+                            {showFeedbackForm && <Review listing={listing} />}
 
-                                    {userRole === 'user' ?  (
-                                        <button onClick={() => setContect(true)} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>Contect Landlord</button>
-                                    ) 
-                                    :
-                                    " "
-                                }
-                                
-                         
+                            {userRole === 'user' ? (
+                                <button onClick={() => setContect(true)} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>Contect Landlord</button>) : ""
+                            }
+
+
 
                             {contect && <Contect listing={listing} />}
+
+                            {userRole === 'user' ? (
+                                <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95' onClick={HandleBooking}>Book Now</button>
+                            ) : ""}
                         </div>
 
                         <div className="Maps">
-                            <iframe className='border-0 h-full w-full left-0 top-0 sm:w-full sm:pb-2' src={googleMapSrc} height="500"  allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe className='border-0 h-full w-full left-0 top-0 sm:w-full sm:pb-2' src={googleMapSrc} height="500" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </>
                 )
