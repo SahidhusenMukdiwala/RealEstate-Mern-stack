@@ -9,6 +9,6 @@ router.post('/update/:id',updateUser)
 router.delete('/delete/:id',VerifyToken,deleteUser)
 router.get('/listings/:id',VerifyToken,getListing)
 router.get('/:id',VerifyToken,getUser)
-router.get('/appointments/my-appointments', VerifyToken,getMyBooking)
+router.get('/bookings/my-bookings', VerifyToken,getMyBooking)
 
 export default router;

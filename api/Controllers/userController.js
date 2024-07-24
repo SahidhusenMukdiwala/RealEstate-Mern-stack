@@ -71,16 +71,15 @@ export const getUser = async (req, res) => {
     } catch (error) {
         res.json({ success: false, message: 'Something went wrong' })
     }
+
 }
 
 export const getMyBooking = async (req, res) => {
 
     try {
         const bookings = await Booking.find({ user: req.userId }).populate('listingId');
-        // console.log(bookings);
-
+        
         const listingIds = bookings.map(booking => booking.listingId._id);
-        // console.log(listingIds);
 
         const listings = await Listing.find({ _id: { $in: listingIds } });
         res.status(200).json({ success: true, message: 'Appointments retrieved successfully', listings });

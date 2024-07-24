@@ -1,5 +1,6 @@
 import Jwt from 'jsonwebtoken'
 import User from '../Models/UserSchema.js'
+
 export const VerifyToken = async(req, res, next) => {
     const token = req.cookies.accessToken
     console.log("TOKEN", token)
@@ -14,6 +15,7 @@ export const VerifyToken = async(req, res, next) => {
             console.log("User", user)
             next()
         })
+    
         const user = await User.findById(decoded.id);
         if (!user) {
             return res.status(401).json({ message: 'Invalid token' });
@@ -27,3 +29,7 @@ export const VerifyToken = async(req, res, next) => {
     }
 
 }
+
+// export const VerifyUser = async(req, res, next) => {
+
+// }

@@ -152,7 +152,7 @@ function Profile() {
   const getallBookings = async () => {
 
     try {
-      const res = await fetch('/api/user/appointments/my-appointments')
+      const res = await fetch('/api/user/bookings/my-bookings')
 
       const result = await res.json();
       console.log("result", result)
@@ -234,9 +234,9 @@ function Profile() {
         <div>
           <h1 className='text-center font-serif text-2xl'>My Bookings</h1>
           
-            <div className="flex flex-wrap items-center justify-center gap-4 mt-5">
+            <div className="flex flex-wrap items-center gap-4 mt-5">
               {bookings.map((booking) => (
-                <ListingCard listings={booking} />
+                <ListingCard listings={booking} key={booking._id}/>
               ))
               }
             </div>

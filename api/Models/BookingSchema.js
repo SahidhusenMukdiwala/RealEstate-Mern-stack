@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-mongoose.set('strictPopulate', false); // you can also add this in index page
+mongoose.set('strictPopulate', false); // you can also add this in index
 const BookingSchema = new mongoose.Schema({
     listingId :{
         type: mongoose.Types.ObjectId,
