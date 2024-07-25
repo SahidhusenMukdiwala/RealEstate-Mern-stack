@@ -42,9 +42,10 @@ export const getalReviews = async (req, res) => {
 
 export const getUserReviews = async(req, res) => {
     try {
-        const userId = req.user.id;
-        console.log(userId)
-        const reviews = await Review.find({ userId:userId });
+        // const userId = req.user.id;
+        // console.log(userId)
+        // const reviews = await Review.find({ userId:userId });
+        const reviews = await Review.find();
         res.status(200).json(reviews);
       } catch (err) {
         res.status(500).json({ message: 'Server error' });

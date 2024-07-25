@@ -5,5 +5,5 @@ const router = express.Router()
 
 router.post ('/reviews/:ListingId',VerifyToken,CreateReview)
 router.get('/allreviews/:id', VerifyToken,getalReviews)
-router.get('/my-reviews', VerifyToken,getUserReviews)
+router.get('/my-allreviews', VerifyToken,getUserReviews)
 export default router

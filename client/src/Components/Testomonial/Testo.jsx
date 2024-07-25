@@ -7,7 +7,7 @@ function Testo() {
     const { currentUser } = useSelector((state) => state.user)
     const FetchallReview = async () => {
         try {
-            const res = await fetch('/api/review/allreviews')
+            const res = await fetch('/api/review/my-allreviews')
 
             const result = await res.json()
             if (!res.ok) {
