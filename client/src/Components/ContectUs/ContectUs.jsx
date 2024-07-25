@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 function ContectUs() {
+    useEffect(()=>{
+        Aos.init({duration: 3000})
+    })
     const { currentUser } = useSelector(state => state.user);
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
@@ -54,8 +58,8 @@ function ContectUs() {
     return (
         <div className="main">
             <div className="Contect-form">
-                <h1 className='font-bold text-3xl m-2 text-center'>Contact Us</h1>
-                <form onSubmit={SubmitHandler}>
+                <h1 className='font-bold text-3xl m-2 text-center' data-aos = "fade-right" >Contact Us</h1>
+                <form data-aos = "fade-down" onSubmit={SubmitHandler}>
                     <div className="form-inputs flex flex-col flex-wrap gap-3 max-w-64 sm:max-w-96 mx-auto mt-7 overflow-hidden">
                         <input 
                             type="text" 

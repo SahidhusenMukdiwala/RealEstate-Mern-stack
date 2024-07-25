@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 function Testo() {
+    useEffect (()=>{
+        Aos.init({duration:3000})
+      })
     const [reviews, setReviews] = useState([]);
     const { currentUser } = useSelector((state) => state.user)
     const FetchallReview = async () => {
@@ -37,7 +42,7 @@ function Testo() {
                         <div className="flex flex-wrap gap-5 testomonial py-3 px-3 ">
 
                             {reviews?.map(review => (
-                                <div key={review._id} className="hover:scale-105  hover:bg-gray-600 hover:text-white shadow-lg hover:shadow-xl duration-[0.5s] mt-3">
+                                <div data-aos="zoom-in-down" key={review._id} className="hover:scale-105  hover:bg-gray-600 hover:text-white shadow-lg hover:shadow-xl duration-[0.5s] mt-3">
                                     {/* <img src={userAva} clxassName='w-h-16  h-16  rounded-full' alt="" /> */}
 
                                     <div className="leading-[30px] border p-3" >
