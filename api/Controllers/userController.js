@@ -78,7 +78,7 @@ export const getMyBooking = async (req, res) => {
 
     try {
         const bookings = await Booking.find({ user: req.userId }).populate('listingId');
-        
+
         const listingIds = bookings.map(booking => booking.listingId._id);
 
         const listings = await Listing.find({ _id: { $in: listingIds } });
@@ -88,16 +88,19 @@ export const getMyBooking = async (req, res) => {
     }
 }
 
-export const myProp = async(req,res) => {
+export const myProp = async (req, res) => {
     try {
         const userId = req.user.id;
         console.log(userId)
+        // Fetch all bookings made by a specific user:
         const properties = await Booking.find({ userId: userId });
+        // Extract the listing IDs from these bookings:
         const listingIds = properties.map(booking => booking.listingId._id);
+        // Fetch the listing details for the extracted listing IDs:
         const listings = await Listing.find({ _id: { $in: listingIds } });
         console.log(listings)
         res.status(200).json(listings);
-      } catch (err) {
-        res.status(500).json({ message: 'Server error',err });
-      }
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', err });
+    }
 }
