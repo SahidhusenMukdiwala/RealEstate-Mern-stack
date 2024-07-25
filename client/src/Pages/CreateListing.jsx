@@ -212,16 +212,16 @@ function CreateListing() {
                     <div className="flex  gap-6">
                         <div className="flex flex-wrap items-center gap-2 ">
                             <p>Beds</p>
-                            <input onChange={handlechange} value={formData.bedrooms} type="number" id="bedrooms" required placeholder='bedrooms' className='p-3 focus:outline-none rounded-lg border' max='10' min='1' />
+                            <input onChange={handlechange} value={formData.bedrooms} type="number" id="bedrooms" required placeholder='bedrooms' className='p-3 focus:outline-none rounded-lg border' max='100' min='1' />
 
                             <p>bathrooms</p>
-                            <input onChange={handlechange} value={formData.bathrooms} type="number" id="bathrooms" required placeholder='Bathrooms' className='p-3 focus:outline-none rounded-lg border' max='10' min='1' />
+                            <input onChange={handlechange} value={formData.bathrooms} type="number" id="bathrooms" required placeholder='Bathrooms' className='p-3 focus:outline-none rounded-lg border' max='100' min='1' />
                             <div className="flex flex-wrap items-center gap-2 ">
                                 <div className="flex flex-col items-center">
                                     <p>RegularPrice</p>
                                     <span className='text-sm'>($/month)</span>
                                 </div>
-                                <input onChange={handlechange} value={formData.regularPrice} type="number" id="regularPrice" required placeholder='RegularPrice' className='p-3 focus:outline-none rounded-lg border' max='1000000' min='50' />
+                                <input onChange={handlechange} value={formData.regularPrice} type="number" id="regularPrice" required placeholder='RegularPrice' className='p-3 focus:outline-none rounded-lg border'  />
                             </div>
                             {
                                 formData.offers &&
@@ -231,7 +231,7 @@ function CreateListing() {
                                             <p>DiscountPrice</p>
                                             <span className='text-sm'>($/month)</span>
                                         </div>
-                                        <input onChange={handlechange} value={formData.discountPrice} type="number" id="discountPrice" required placeholder='DiscountPrice' className='p-3 focus:outline-none rounded-lg border' min='0' max='10000000' />
+                                        <input onChange={handlechange} value={formData.discountPrice} type="number" id="discountPrice" required placeholder='DiscountPrice' className='p-3 focus:outline-none rounded-lg border' min='0'/>
                                     </div>
                                 )
                             }

@@ -87,3 +87,17 @@ export const getMyBooking = async (req, res) => {
         res.status(500).json({ success: false, message: 'Something went Wrong, Can not get Appointment' })
     }
 }
+
+export const myProp = async(req,res) => {
+    try {
+        const userId = req.user.id;
+        console.log(userId)
+        const properties = await Booking.find({ userId: userId });
+        const listingIds = properties.map(booking => booking.listingId._id);
+        const listings = await Listing.find({ _id: { $in: listingIds } });
+        console.log(listings)
+        res.status(200).json(listings);
+      } catch (err) {
+        res.status(500).json({ message: 'Server error',err });
+      }
+}

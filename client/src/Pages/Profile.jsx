@@ -152,7 +152,7 @@ function Profile() {
   const getallBookings = async () => {
 
     try {
-      const res = await fetch('/api/user/bookings/my-bookings')
+      const res = await fetch('/api/user/bookings/my-properties')
 
       const result = await res.json();
       console.log("result", result)
@@ -161,7 +161,7 @@ function Profile() {
         return toast.error(res.message);
       }
       console.log("Set Booking", setBooking(result))
-      setBooking(result.listings)
+      setBooking(result)
 
     } catch (error) {
       toast.error(error.message)
@@ -230,7 +230,8 @@ function Profile() {
         )
       }
 
-      {tab === 'bookings' && (
+      {
+      tab === 'bookings' && (
         <div>
           <h1 className='text-center font-serif text-2xl'>My Bookings</h1>
           
@@ -243,8 +244,6 @@ function Profile() {
           </div>
       
       )
-
-
       }
 
 
