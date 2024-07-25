@@ -66,7 +66,8 @@ function ListingPage() {
             setReviews(result)
 
         } catch (error) {
-            toast.error(error.message)
+            // toast.error(error.message)
+            console.log(error.message)
         }
 
 
@@ -98,7 +99,8 @@ function ListingPage() {
             }
             console.log(data.session.url)
         } catch (error) {
-            toast.error(error.message)
+            // toast.error(error.message)
+            console.log(error.message)
         }
     }
 
