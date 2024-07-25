@@ -234,13 +234,15 @@ function Profile() {
       tab === 'bookings' && (
         <div>
           <h1 className='text-center font-serif text-2xl'>My Bookings</h1>
-          
-            <div className="flex flex-wrap items-center gap-4 mt-5">
-              {bookings.map((booking) => (
-                <ListingCard listings={booking} key={booking._id}/>
-              ))
-              }
-            </div>
+          {
+            bookings.length === 0 ? <h1 className='text-red-700 text-2xl text-center mt-2 font-mono'>Not Booked Yet</h1> : <div className="flex flex-wrap items-center gap-4 mt-5">
+            {bookings.map((booking) => (
+              <ListingCard listings={booking} key={booking._id}/>
+            ))
+            }
+          </div>
+          }
+            
           </div>
       
       )
