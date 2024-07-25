@@ -7,6 +7,7 @@ function Search() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [listing, setListing] = useState([])
+    console.log("listings",listing)
     const [shoeMore, setShoeMore] = useState(false)
     const [sideBarData, setSideBarData] = useState({
         searchTerm: "",
@@ -28,7 +29,6 @@ function Search() {
         const sortFromUrl = urlParams.get('sort')
         const orderFromUrl = urlParams.get('order')
 
-
         if (searchTermFromUrl || typeFromUrl || parkingFromUrl || offersFromUrl || sortFromUrl || orderFromUrl || furnishedFromUrl) {
             setSideBarData({
                 searchTerm: searchTermFromUrl || '',
@@ -42,6 +42,7 @@ function Search() {
         }
         const fetchListing = async () => {
             setLoading(true);
+            setShoeMore(false)
 
             try {
                 const searchQuery = urlParams.toString();
@@ -52,6 +53,9 @@ function Search() {
                 }
                 if(result.length > 8){
                     setShoeMore(true)
+                }
+                else{
+                    setShoeMore(false)
                 }
                 setListing(result)
                 setLoading(false);
@@ -96,11 +100,11 @@ function Search() {
     }
 
     const showMoreClick = async() =>{
-        setShoeMore(false)
+        // setShoeMore(false)
         const moreListing = listing.length;
-        const StartIndex = moreListing;
+        const startIndex = moreListing;
         const urlParams = new URLSearchParams(location.search);
-        urlParams.set('StartIndex',StartIndex)
+        urlParams.set('startIndex',startIndex)
         const searchQuery = urlParams.toString();
         console.log(searchQuery)
         const res =await fetch(`/api/listing/get?${searchQuery}`)
@@ -108,11 +112,9 @@ function Search() {
         const result = await res.json();
         console.log(result)
         if(result.length < 9){
-            setShoeMore(true);
+            setShoeMore(false);
         }
-        else{
-            setShoeMore(false)
-        }
+        
         setListing([...listing,...result])
     }
     return (
@@ -186,9 +188,12 @@ function Search() {
                         ))
                     }
                 </div>
-                    <div className="">{
-                        shoeMore && <button className='text-green-700 hover:underline p-7 w-full text-center' onClick={showMoreClick}>Show More..</button>
-                        }</div>
+
+                    {shoeMore && (
+                        <button className='text-green-700 hover:underline p-7 w-full text-center' onClick={showMoreClick}>
+                            Show More
+                        </button>
+                    )}
             </div>
         </div>
     )
