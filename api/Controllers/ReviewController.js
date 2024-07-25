@@ -30,10 +30,23 @@ export const CreateReview = async (req, res,) => {
 }
 
 export const getalReviews = async (req, res) => {
-    const { listingId } = req.params;
+    const  ListingId  = req.params.id;
+    console.log(ListingId)
     try {
-        const reviews = await Review.find({listing: listingId});
+        const reviews = await Review.find({ListingId: ListingId});
+        console.log(reviews)
         res.status(200).json(reviews);
     } catch (error) {
     }
 };
+
+export const getUserReviews = async(req, res) => {
+    try {
+        const userId = req.user.id;
+        console.log(userId)
+        const reviews = await Review.find({ userId:userId });
+        res.status(200).json(reviews);
+      } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+      }
+}

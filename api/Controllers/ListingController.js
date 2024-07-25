@@ -87,7 +87,7 @@ export const GetListing = async (req, res) => {
         }
         res.status(200).json(listing)
     } catch (error) {
-        res.status(404).json(error.message)
+        // res.status(404).json(error.message)
     }
 }
 

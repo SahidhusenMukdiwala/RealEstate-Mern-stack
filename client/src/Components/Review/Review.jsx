@@ -18,13 +18,13 @@ function Review() {
 
   const FetchallReview = async () => {
     try {
-      const res = await fetch('/api/review/allreviews')
+      const res = await fetch(`/api/review/allreviews/${params.id}`)
 
       const result = await res.json()
       if (!res.ok) {
         toast.error(res.message)
       }
-      setReviews(result.data || [])
+      setReviews(result)
       
     } catch (error) {
       toast.error(error.message)
