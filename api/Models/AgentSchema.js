@@ -49,6 +49,14 @@ const agentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  chats: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Chat'
+  }],
+messages: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Message'
+}]
 //   ratings: [{
 //     user: {
 //       type: mongoose.Schema.Types.ObjectId,

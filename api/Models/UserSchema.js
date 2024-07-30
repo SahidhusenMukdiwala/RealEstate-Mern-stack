@@ -29,6 +29,14 @@ const userSchema = new mongoose.Schema({
             ref: 'Review'
         },
     ],
+    chats: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Chat'
+      }],
+    messages: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Message'
+    }]
     
 }, { timestamps: true });
 
