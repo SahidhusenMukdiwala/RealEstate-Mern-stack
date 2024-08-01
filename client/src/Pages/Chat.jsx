@@ -97,25 +97,11 @@ function Chat() {
             toast.success("Message sent successfully!");
 
 
-            // socket.emit("sendMessage",{
-            //     receiverId:agentId,
-            //     data:result
-            // })
         } catch (error) {
             console.log('Error sending message', error);
 
         }
     }
-
-    // useEffect(() => {
-    // if(chat,socket){
-    //     socket.on("getMessage",(data)=>{
-    //         if(chat.id === data.chat.id){
-    //             setChat((prev) =>({ ...prev,messages:[...prev.messages,data]}))
-    //         }
-    //     })
-    // }
-    // }, [])
 
 
     const handleOpenChat = async (ChatId, agent) => {
