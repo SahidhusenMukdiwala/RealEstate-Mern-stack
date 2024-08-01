@@ -15,7 +15,7 @@ const MessageSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
-  lastActive: { type: Date, default: Date.now },
+  lastActive: { type: Date, default: Date.now() },
 }, { timestamps: true })
 
 const Message = mongoose.model('Message', MessageSchema);
