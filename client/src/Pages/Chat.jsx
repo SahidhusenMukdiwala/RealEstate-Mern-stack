@@ -21,7 +21,7 @@ function Chat() {
 
     useEffect(()=>{
         if (messageEndRef.current) {
-            messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+            messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
         }
     },[messages])
 
