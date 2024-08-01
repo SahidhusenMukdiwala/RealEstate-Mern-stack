@@ -40,7 +40,7 @@ export const AllChats = async (req, res) => {
             $or: [{ userId: userId }, { agentId: req.user.id }]
         }).populate('userId', 'username email avatar')
             .populate('agentId', 'username email avatar')
-            .populate('lastMessage', 'content').populate('Message' , 'content userRole')
+            .populate('lastMessage', 'content').populate('Message' , 'content userRole createdAt')
             ;
         console.log("chats", chats)
         res.status(200).json(chats);
