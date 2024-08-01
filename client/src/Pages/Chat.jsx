@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, {  useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import './Chat.css';
 import { format } from 'timeago.js';
-// import { SocketContext } from '../Context/SocketContext';
 
 function Chat() {
     const { currentUser } = useSelector(state => state.user);
-    // const ChatId = currentUser?.data?.chats
-    // const { socket } = useContext(SocketContext)
-    // console.log(`/message/messages/${ChatId}/getmessages`)
     const [agentId, setAgentId] = useState('')
     const [chat, setChat] = useState([]);
+    const [messages, setMessages] = useState([]);
     const userId = currentUser?.data?._id;
     const userRole1 = currentUser?.data?.role;
     const [allchats, setAllchats] = useState([]);
@@ -20,15 +17,14 @@ function Chat() {
     const [messageContent, setMessageContent] = useState('');
     console.log(allchats);
     const [signleData, setSingleData] = useState([]);
-    // console.log("agentId" + agentId ? "true" : "false");
-    // const url = signleData?.chat?._id
     const messageEndRef = useRef()
 
-    // useEffect(()=>{
-    //     if (messageEndRef.current) {
-    //         messageEndRef.current.scrollIntoView({ behavior: "smooth" });
-    //     }
-    // },[chat])
+    useEffect(()=>{
+        if (messageEndRef.current) {
+            messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    },[messages])
+
 
 
     const handleStartChat = async (e) => {
@@ -94,12 +90,10 @@ function Chat() {
                 toast.error("There was an error sending the message.");
             }
             setMessageContent('');
+            setMessages([...messages, result]);
             toast.success("Message sent successfully!");
-
-
         } catch (error) {
             console.log('Error sending message', error);
-
         }
     }
 
@@ -190,11 +184,7 @@ function Chat() {
                                                 </div>
 
                                                 }
-                                                {/* <div className="user bg-yellow-400 p-2 flex items-center justify-around">
-                                                    <img className='w-[40px] h-[40px] rounded-full' src={agentData.avatar} alt={`${agentData.username}'s avatar`} />
-                                                    <p>{agentData.username}</p>
-                                                    <div className="close cursor-pointer" onClick={() => setSelectedChatId(null)}>X</div>
-                                                </div> */}
+        
                                             </div>
                                         </div>
                                         <div className="center border p-2 mt-3 h-[350px] overflow-scroll flex flex-col">
@@ -209,7 +199,7 @@ function Chat() {
                                                     </span>
                                                 </div>
                                             ))}
-                                            {/* <div className="" ref={messageEndRef}></div> */}
+                                            <div className="" ref={messageEndRef}></div>
                                         </div>
                                         <form onSubmit={HandleCreateMessage} className="button flex justify-center flex-wrap items-center mt-2">
                                             <textarea name="content"
