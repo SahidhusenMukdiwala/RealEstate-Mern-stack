@@ -11,7 +11,21 @@ const ChatSchema = new mongoose.Schema({
         ref:"Agent",
         required:true,
     },
-    lastMessage: { type: mongoose.Types.ObjectId, ref: 'Message' }, 
+    seenBy: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      ],    
+      Message: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Message'
+      }],
+      lastMessage: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Message'
+      },
+    
 },{timestamps:true})
 
 

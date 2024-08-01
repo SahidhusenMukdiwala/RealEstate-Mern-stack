@@ -23,7 +23,9 @@
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.5",
     "redux-persist": "^6.0.0",
-    "swiper": "^11.1.4"
+    "socket.io-client": "^4.7.5",
+    "swiper": "^11.1.4",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

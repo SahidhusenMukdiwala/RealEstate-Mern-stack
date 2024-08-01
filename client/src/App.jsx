@@ -17,6 +17,7 @@ import Review from './Components/Review/Review'
 import ContectUs from './Components/ContectUs/ContectUs'
 import Successful from './Components/SuccessfulPage/Successful'
 import Articals from './Pages/Articals'
+import Chat from './Pages/Chat'
 export default function App() {
   return <BrowserRouter>
     <Header />
@@ -43,6 +44,7 @@ export default function App() {
       <Route element={<PrivateRoute allowedRoles={['user', 'agent']} />} >
         <Route path='/ContectUs' element={<ContectUs />} />
         <Route path='/Articals' element={<Articals />} />
+        <Route path='/chat' element={<Chat/>}/>
       </Route>
       <Route path='/contectus/Submit/Sucessful' element={<Successful />} />
     </Routes>

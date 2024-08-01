@@ -1,0 +1,8 @@
+.chatMessages{
+    width:50%;
+
+    &.ownMessage{
+        align-self: flex-end;
+        text-align: right;
+    }
+}
