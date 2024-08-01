@@ -45,7 +45,7 @@ export const getUserReviews = async(req, res) => {
         // const userId = req.user.id;
         // console.log(userId)
         // const reviews = await Review.find({ userId:userId });
-        const reviews = await Review.find();
+        const reviews = await Review.find().populate('userId' , 'avatar');
         res.status(200).json(reviews);
       } catch (err) {
         res.status(500).json({ message: 'Server error' });
