@@ -80,7 +80,7 @@ export default function Home() {
         }
       </Swiper>
 
-      <Link to={'/chat'} data-aos="zoom-in" className='fixed w-[60px] h-[60px] bottom-[40px] right-[15px] z-10 text-center text-[30px] shadow-lg hover:scale-110 duration-[1s]' target='_blank'>
+      <Link to={'/chat'} data-aos="zoom-in" className='fixed w-[60px] h-[60px] bottom-[40px] right-[15px] z-10 text-center text-[30px] shadow-lg hover:scale-110 duration-[1s]'>
       <img className='mix-blend-color-burn rounded-[50px] bg-transparent bg-cover' src={'https://img.freepik.com/premium-photo/cute-white-system-artificial-intelligence-chatgpt-chat-bot-ai-technology-smart-robot-ai-chat-gpt_454018-1456.jpg'} alt="#" />
       </Link>
 

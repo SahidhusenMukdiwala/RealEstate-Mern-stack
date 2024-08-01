@@ -4,7 +4,12 @@ const MessageSchema = new mongoose.Schema({
   chat: { type: mongoose.Schema.Types.ObjectId, ref: 'Chat', required: true },
   sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   reciever: { type: mongoose.Types.ObjectId, ref: 'Agent', required: true },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
   content: { type: String, required: true },
+  userRole: { type: String, enum: ['user', 'agent'] },
   isRead: { type: Boolean, default: false },
   seenBy: [{
     type: mongoose.Schema.Types.ObjectId,

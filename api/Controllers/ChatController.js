@@ -40,7 +40,7 @@ export const AllChats = async (req, res) => {
             $or: [{ userId: userId }, { agentId: req.user.id }]
         }).populate('userId', 'username email avatar')
             .populate('agentId', 'username email avatar')
-            .populate('lastMessage', 'content').populate('Message' , 'content MessageId')
+            .populate('lastMessage', 'content').populate('Message' , 'content userRole')
             ;
         console.log("chats", chats)
         res.status(200).json(chats);
@@ -51,10 +51,10 @@ export const AllChats = async (req, res) => {
 
 export const getChat = async (req, res) => {
     const { chatId } = req.params;
-
+const userId = req.user.id
     try {
         
-        const chat = await Chat.findById(chatId).populate('userId', 'username email').populate('agentId', 'username email').populate('lastMessage', 'content');
+        const chat = await Chat.findById(chatId).populate('userId', 'username email').populate('agentId', 'username email').populate('lastMessage', 'content').populate('seenBy', 'username');
 
         if (!chat) {
            
@@ -62,6 +62,8 @@ export const getChat = async (req, res) => {
         }
         const agentId = chat.agentId;
         console.log("agentId: ", agentId);
+        const { seenBy } = chat;
+        console.log("seenBy: ", seenBy);
         
         res.status(200).json({ success: true, message: "Chat retrieved successfully", chat });
 

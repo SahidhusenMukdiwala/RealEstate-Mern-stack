@@ -22,69 +22,122 @@ export const getMessages = async (req, res) => {
     }
 }
 
+// export const CreateMessage = async (req, res) => {
+
+//     const { chatId } = req.params;
+//     console.log(chatId)
+//     const { content } = req.body;
+//     console.log(content)
+//     try {
+//         const chat = await Chat.findById(chatId).populate('Message' , 'content');
+
+//         // console.log(ok)
+//         const agentId = chat.agentId;
+
+//         console.log("agentId:", agentId);
+
+//         if (!chat) {
+//             res.status(404).json({ success: false, message: "Chat not found" })
+//         }
+
+
+//         const userRole = req.user.role; 
+//         console.log("userRole",userRole)
+
+//         let sender, reciever;
+    
+//         if (userRole === 'user') {
+//           sender = userId;
+//           reciever = agentId;
+//         } else if (userRole === 'agent') {
+//           sender = agentId;
+//           reciever = chat.userId; // Assuming `chat` has a field `userId` for the user
+//         } else {
+//           return res.status(400).json({ success: false, message: "Invalid user role" });
+//         }
+    
+
+//         // create message now
+//         const userId = req.user.id;
+//         console.log(sender,"sender")
+//         console.log("reciever",reciever)
+//         const message = new Message({ chat: chatId, sender, reciever, content, seenBy: userId })
+//         await message.save()
+//         console.log(message)
+
+//         const user = await User.findById(req.user.id).populate('userId', 'username email').populate('message','content');
+//         const agent = await Agent.findById(agentId).populate('agentId', 'username email').populate('message','content');
+
+//         user.messages.push(message);
+//         await user.save()
+
+//         agent.messages.push(message);
+//         await agent.save()
+
+//         chat.Message.push(message);
+//         await message.save();
+
+
+//         // Update the last message and unread count
+//         await User.findByIdAndUpdate(userId, { $push: { messages: message._id } });
+
+//         // Update the last message in the chat document
+//         chat.lastMessage = message._id;
+//         await chat.save();
+
+//         res.status(200).json({ success: true, message: "Message saved successfully", message })
+
+//     } catch (error) {
+//         res.status(500).json({ success: false, message: "message not save " })
+//     }
+
+// }
+
 export const CreateMessage = async (req, res) => {
-
     const { chatId } = req.params;
-    console.log(chatId)
     const { content } = req.body;
-    console.log(content)
+
     try {
-        const chat = await Chat.findById(chatId).populate('Message' , 'content');
-
-        // console.log(ok)
-        const agentId = chat.agentId;
-
-        console.log("agentId:", agentId);
+        const chat = await Chat.findById(chatId).populate('messages', 'content');
 
         if (!chat) {
-            res.status(404).json({ success: false, message: "Chat not found" })
+            return res.status(404).json({ success: false, message: "Chat not found" });
         }
 
+        const userId = req.user._id;
+        const userRole = req.user.role;
 
-        // const userRole = req.user.role; 
+        let sender, reciever;
 
-        // let sender, receiver;
-    
-        // if (userRole === 'user') {
-        //   sender = userId;
-        //   receiver = agentId;
-        // } else if (userRole === 'agent') {
-        //   sender = agentId;
-        //   receiver = chat.userId; // Assuming `chat` has a field `userId` for the user
-        // } else {
-        //   return res.status(400).json({ success: false, message: "Invalid user role" });
-        // }
-    
+        if (userRole === 'user') {
+            sender = userId;
+            reciever = chat.agentId;
+        } else if (userRole === 'agent') {
+            sender = userId;
+            reciever = chat.userId;
+        } else {
+            return res.status(400).json({ success: false, message: "Invalid user role" });
+        }
 
-        // create message now
-        const userId = req.user.id;
-        const message = new Message({ chat: chatId, sender: userId, reciever: agentId, content, seenBy: userId })
-        await message.save()
-
-        const user = await User.findById(req.user.id).populate('userId', 'username email').populate('message','content');
-        const agent = await Agent.findById(agentId).populate('agentId', 'username email').populate('message','content');
-
-        user.messages.push(message);
-        await user.save()
-
-        agent.messages.push(message);
-        await agent.save()
-
-        chat.Message.push(message);
+        const message = new Message({ chat: chatId, sender, reciever, content, seenBy: [userId],userRole:userRole });
         await message.save();
 
+        if (userRole === 'user') {
+            await User.findByIdAndUpdate(userId, { $push: { messages: message._id } });
+            await Agent.findByIdAndUpdate(reciever, { $push: { messages: message._id } });
+        } else if (userRole === 'agent') {
+            await Agent.findByIdAndUpdate(userId, { $push: { messages: message._id } });
+            await User.findByIdAndUpdate(reciever, { $push: { messages: message._id } });
+        }
 
-        // Update the last message and unread count
-        await User.findByIdAndUpdate(userId, { $push: { messages: message._id } });
+        chat.Message.push(message._id);
 
-        // Update the last message in the chat document
         chat.lastMessage = message._id;
+        // chat.lastMessage = userRole;
         await chat.save();
 
-        res.status(200).json({ success: true, message: "Message saved successfully", message })
-
+        res.status(200).json({ success: true, message: "Message saved successfully", message });
     } catch (error) {
-        res.status(500).json({ success: false, message: "message not save " })
+        res.status(500).json({ success: false, message: "Message not saved", error: error.message });
     }
-
-}
+};

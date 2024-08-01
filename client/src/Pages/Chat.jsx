@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import './Chat.css';
@@ -7,17 +7,28 @@ import { format } from 'timeago.js';
 
 function Chat() {
     const { currentUser } = useSelector(state => state.user);
+    // const ChatId = currentUser?.data?.chats
     // const { socket } = useContext(SocketContext)
+    // console.log(`/message/messages/${ChatId}/getmessages`)
     const [agentId, setAgentId] = useState('')
     const [chat, setChat] = useState([]);
     const userId = currentUser?.data?._id;
+    const userRole1 = currentUser?.data?.role;
     const [allchats, setAllchats] = useState([]);
     const [selectedChatId, setSelectedChatId] = useState(null);
+    console.log("selectedChatId", selectedChatId)
     const [messageContent, setMessageContent] = useState('');
-    // console.log(messageContent);
+    console.log(allchats);
     const [signleData, setSingleData] = useState([]);
-// console.log("agentId" + agentId ? "true" : "false");
+    // console.log("agentId" + agentId ? "true" : "false");
     // const url = signleData?.chat?._id
+    const messageEndRef = useRef()
+
+    // useEffect(()=>{
+    //     if (messageEndRef.current) {
+    //         messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    //     }
+    // },[chat])
 
 
     const handleStartChat = async (e) => {
@@ -45,6 +56,7 @@ function Chat() {
         const handleAllchats = async () => {
             try {
                 const res = await fetch(`/api/chat/chats/Allchats`);
+                // const res = await fetch(`/message/messages/${ChatId}/getmessages`)
                 const data = await res.json();
 
                 if (!res.ok) {
@@ -81,13 +93,17 @@ function Chat() {
             if (!res.ok) {
                 toast.error("There was an error sending the message.");
             }
+            setMessageContent('');
+            toast.success("Message sent successfully!");
+
+
             // socket.emit("sendMessage",{
             //     receiverId:agentId,
             //     data:result
             // })
         } catch (error) {
             console.log('Error sending message', error);
-            
+
         }
     }
 
@@ -100,12 +116,12 @@ function Chat() {
     //     })
     // }
     // }, [])
-    
+
 
     const handleOpenChat = async (ChatId, agent) => {
         try {
             setSelectedChatId(ChatId);
-            const res = await fetch(`api/chat/chats/${ChatId}/getChat`);
+            const res = await fetch(`/message/messages/${ChatId}/getmessages`);
             const result = await res.json();
 
             if (!res.ok) {
@@ -113,7 +129,7 @@ function Chat() {
             }
             setSingleData({ ...result, agent });
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     };
 
@@ -146,9 +162,11 @@ function Chat() {
                         const ChatId = chat._id;
                         const userData = chat.userId;
                         const lastMessage = chat?.lastMessage?.content;
+                        console.log("lastMessage",lastMessage)
                         const agent = chat?.agentId?._id;
                         const agentData = chat.agentId;
                         const Message = chat?.Message;
+                        console.log(Message)
 
                         return (
                             <div key={chat._id}>
@@ -162,7 +180,8 @@ function Chat() {
                                         </div>
                                     )}
                                     {userId === agent && (
-                                        <div className="w-full agent-details flex items-center justify-evenly rounded-lg hover:scale-110 hover:overflow-hidden mt-3 text-white gap-3 sm:p-3">
+                                        <div className="w-full agent-details flex items-center justify-evenly rounded-lg hover:scale-[0.9] hover:overflow-hidden duration-[1s] mt-3 text-white gap-3 sm:p-3"
+                                            style={{ backgroundColor: chat.seenBy.includes(userId) ? "white" : "#fecd514e", color: chat.seenBy.includes(userId) ? "black" : "#fff" }}>
                                             <img className='w-[40px] h-[40px] rounded-full' src={userData.avatar} alt={`${userData.username}'s avatar`} />
                                             <p>{userData.username}</p>
                                             <p>{lastMessage}</p>
@@ -194,19 +213,23 @@ function Chat() {
                                         </div>
                                         <div className="center border p-2 mt-3 h-[350px] overflow-scroll flex flex-col">
                                             {Message.map((message) => (
-                                                <div key={message._id} className="chatMessages" style={{ alignSelf: user === userId ? 'flex-end' : 'flex-start', textAlign: user === userId ? 'right' : 'left' }}>
+                                                <div key={message._id} className="chatMessages" style={{
+                                                    alignSelf: message.userRole === "agent" ? 'flex-start' : 'flex-end',
+                                                    textAlign: message.userRole === 'agent' ? 'left' : 'right'
+                                                }}>
                                                     <p className='text-[20px]'>{message.content}</p>
                                                     <span className='bg-yellow-400 text-white p-1 text-[12px] rounded-lg'>
                                                         {format(message.createdAt)}
                                                     </span>
                                                 </div>
                                             ))}
+                                            {/* <div className="" ref={messageEndRef}></div> */}
                                         </div>
                                         <form onSubmit={HandleCreateMessage} className="button flex justify-center flex-wrap items-center mt-2">
                                             <textarea name="content"
                                                 id="content"
                                                 onChange={handleChangeMessageInput}
-                                                value={messageContent} className='border font-serif border-yellow-400 text-lg rounded-lg focus:outline-none flex-1 h-full'></textarea>
+                                                value={messageContent} className='border font-serif border-yellow-400 text-md rounded-lg focus:outline-none flex-1 pl-4 pt-2'></textarea>
                                             <button className='bg-yellow-400 p-3 rounded-lg h-full'>Send</button>
                                         </form>
                                     </div>

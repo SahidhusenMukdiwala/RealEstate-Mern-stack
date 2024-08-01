@@ -17,12 +17,16 @@ export const VerifyToken = async (req, res, next) => {
             next()
         })
 
+
         const user = await User.findById(decoded.id);
+
         // let role = 'user';
 
         // if (!user) {
         //     user = await Agent.findById(decoded.id);
         //     role = 'agent';
+        //     console.log("agent",user)
+
         // }
         if (!user) {
             return res.status(401).json({ message: 'Invalid token' });
@@ -37,4 +41,35 @@ export const VerifyToken = async (req, res, next) => {
     }
 }
 
-
+    export const VerifyToken2 = async (req, res, next) => {
+        const token = req.cookies.accessToken;
+    
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Unauthorized User' });
+        }
+    
+        try {
+            // Verify the token
+            const decoded = Jwt.verify(token, process.env.JWT_SECRET_KEY);
+    
+            // Check if the user is an agent or a regular user
+            let user = await User.findById(decoded.id);
+            if (!user) {
+                user = await Agent.findById(decoded.id);
+                if (!user) {
+                    return res.status(401).json({ success: false, message: 'Invalid token' });
+                }
+                req.user = user;
+                req.user.role = 'agent'; // Set role as 'agent'
+            } else {
+                req.user = user;
+                req.user.role = 'user'; // Set role as 'user'
+            }
+    
+            console.log("Authenticated User:", req.user);
+            next();
+        } catch (error) {
+            console.error("Token Verification Error:", error);
+            res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+    };
