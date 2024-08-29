@@ -30,6 +30,8 @@ function Testo() {
         FetchallReview();
     }, []);
 
+    const limitedReviews = reviews.slice(0, 5);
+
     return (
         <>
             <div className="flex justify-center items-center mt-7 hover:cursor-pointer">
@@ -42,10 +44,10 @@ function Testo() {
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex flex-wrap gap-5 testomonial py-3 px-3 ">
 
-                            {reviews?.map(review => (
+                            {limitedReviews?.map(review => (
                                 <div data-aos="zoom-in-down" key={review._id} className="hover:scale-105  hover:bg-gray-600 hover:text-white shadow-lg hover:shadow-xl duration-[0.5s] mt-3">
 
-                                    <div className="leading-[30px] border p-3" >
+                                    <div className="leading-[30px] w-[250px] border p-3" >
                                         <div className="flex gap-2 items-center justify-between text-lg">
                                             <img src={review?.userId?.avatar} className='w-6  h-6  rounded-full' alt="" />
                                             <h6 className="mb-0 font-bold">{review.username}</h6>
@@ -63,10 +65,7 @@ function Testo() {
                             )}
 
                         </div>
-
                     </div>
-
-
                 </div>
             </div>
         </>

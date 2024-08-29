@@ -16,6 +16,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(true)
   const headerRef = useRef(null)
   const navigate = useNavigate()
+
   const handleSeacrch = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(window.location.search)
@@ -79,7 +80,6 @@ export default function Header() {
     },
 
   ]
-
 
 
   return (

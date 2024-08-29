@@ -11,6 +11,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers:{
+        // state will give you access of initial state properties . 
         signInStart: (state) =>{
             state.loading = true;
         },
